@@ -3,9 +3,15 @@ require_once('db_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if email address already exists
-    $sql = "SELECT email from accounts WHERE email =" . $_POST['email'];
-    $result = mysqli_query($link, $sql);
-    echo '<h1>' . $result . '</h1>';
+    $sql = $link->prepare("SELECT * from accounts WHERE email = ?");
+    $sql->bind_param('s', $_POST['email']);
+    $sql->execute();
+    $result = $sql->get_result();
+    while($row = $result->fetch_assoc()) {
+        $arr[] = $row;
+      }
+    if(!$arr) exit('No rows');
+    var_export($arr);
 
 
     // $sql = $link->prepare("INSERT INTO accounts (account_id, email, username, password) VALUES (NULL, ?, ?, ?)");
@@ -15,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // $pwd = $_POST['pwd'];
     // $sql->execute();
     $sql->close();
-    $link->close();
 }
 
 ?>
