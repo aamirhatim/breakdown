@@ -8,11 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql->execute();
     $result = $sql->get_result();
     while($row = $result->fetch_assoc()) {
-        $arr[] = $row;
+        echo '<h1>TEST</h1>' . $row[email];
       }
-    if(!$arr) exit('No rows');
-    var_export($arr);
-
 
     // $sql = $link->prepare("INSERT INTO accounts (account_id, email, username, password) VALUES (NULL, ?, ?, ?)");
     // $sql->bind_param('ss', $email, $user, $pwd);
