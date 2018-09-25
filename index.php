@@ -14,8 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = mysqli_query($link, $query);
     while ($row = mysqli_fetch_assoc($result)) {
         echo $row;
+        echo 'hihihihi';
     }
     mysqli_close($link);
+    echo 'finished';
 
 
     // $sql = $link->prepare("INSERT INTO accounts (account_id, email, username, password) VALUES (NULL, ?, ?, ?)");
