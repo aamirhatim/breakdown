@@ -3,15 +3,7 @@ require_once('db_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO accounts (account_id, username, password) VALUES (NULL, 'test1', 'test2')";
-    // $sql->bind_param('ss', $user, $pwd);
-    // $sql->execute();
-
-    // if ($link->query($sql) === TRUE) {
-    //     echo "New record created successfully";
-    // } else {
-    //     echo "Error: " . $sql . "<br>" . $link->error;
-    // }
-
+    $link->query($sql);
     $sql->close();
     $link->close();
 }
