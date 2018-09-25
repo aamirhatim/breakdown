@@ -6,11 +6,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // $sql->bind_param('ss', $user, $pwd);
     // $sql->execute();
 
-    if ($link->query($sql) === TRUE) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $link->error;
-    }
+    // if ($link->query($sql) === TRUE) {
+    //     echo "New record created successfully";
+    // } else {
+    //     echo "Error: " . $sql . "<br>" . $link->error;
+    // }
 
     $sql->close();
     $link->close();
