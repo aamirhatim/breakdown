@@ -3,22 +3,23 @@ require_once('db_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if email address already exists
-    // $sql = $link->prepare("SELECT email from accounts WHERE email = ?");
-    // $sql->bind_param('s', trim($_POST['email']));
-    // $sql->execute();
-    // $sql->bind_result($result);
-    // $sql->fetch();
-    // echo $result;
-    // $result = $sql->get_result();
-    echo $_POST['email'];
-    echo trim($_POST['email']);
-    echo htmlspecialchars($_POST['email']);
-    $query = "SELECT * from accounts WHERE email =" . trim($_POST['email']);
-    $result = mysqli_query($link, $query);
-    while ($row = mysqli_fetch_assoc($result)) {
-        echo $row;
+    $sql = $link->prepare("SELECT email from accounts WHERE email = '?'");
+    $sql->bind_param('s', htmlspecialchars($_POST['email']));
+    $result = $link->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo $row;
+        }
+    } else {
+        echo 'No rows!';
     }
-    mysqli_close($link);
+
+    // $query = "SELECT * from accounts WHERE email =" . trim($_POST['email']);
+    // $result = mysqli_query($link, $query);
+    // while ($row = mysqli_fetch_assoc($result)) {
+    //     echo $row;
+    // }
+    // mysqli_close($link);
     echo 'finished';
 
 
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // $sql->bind_param('sss', $_POST['email'], $_POST['user'], $_POST['pwd']);
     // $sql->execute();
     // $sql->close();
-    // $link->close();
+    $link->close();
 }
 
 ?>
