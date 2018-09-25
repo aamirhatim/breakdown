@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 
+  <?php require_once('db_config.php')?>
+
   <head>
 		<title>Aamir Husain</title>
   </head>
