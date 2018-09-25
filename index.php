@@ -2,12 +2,20 @@
 require_once('db_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $sql = $link->prepare("INSERT INTO accounts (account_id, email, username, password) VALUES (NULL, ?, ?, ?)");
-    $sql->bind_param('ss', $email, $user, $pwd);
+    // Check if email address already exists
+    $sql = $link->prepare("SELECT email from accounts WHERE email = ?");
+    $sql->bind_param('s', $email);
     $email = $_POST['email'];
-    $user = $_POST['user'];
-    $pwd = $_POST['pwd'];
-    $sql->execute();
+    $result = mysqli_query($link, $sql);
+    echo '<h1>' . $result . '</h1>';
+
+
+    // $sql = $link->prepare("INSERT INTO accounts (account_id, email, username, password) VALUES (NULL, ?, ?, ?)");
+    // $sql->bind_param('ss', $email, $user, $pwd);
+    // $email = $_POST['email'];
+    // $user = $_POST['user'];
+    // $pwd = $_POST['pwd'];
+    // $sql->execute();
     $sql->close();
     $link->close();
 }
