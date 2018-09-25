@@ -4,12 +4,13 @@ require_once('db_config.php');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if email address already exists
     $sql = $link->prepare("SELECT * from accounts WHERE email = ?");
-    $sql->bind_param('s', $_POST['email']);
+    $sql->bind_param('s', trim($_POST['email']));
     $sql->execute();
+    $sql->bind_result($result);
+    $sql->fetch();
+    echo $result;
     $result = $sql->get_result();
-    while($row = $result->fetch_assoc()) {
-        echo '<h1>TEST</h1>' . $row[email];
-    }
+
 
     // $sql = $link->prepare("INSERT INTO accounts (account_id, email, username, password) VALUES (NULL, ?, ?, ?)");
     // $sql->bind_param('sss', $_POST['email'], $_POST['user'], $_POST['pwd']);
