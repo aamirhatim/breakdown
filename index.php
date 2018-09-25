@@ -10,11 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // $sql->fetch();
     // echo $result;
     // $result = $sql->get_result();
-    $query = "SELECT * from accounts";
+    $query = "SELECT * from accounts WHERE email = 'aamir300@gmail.com'";
     $result = mysqli_query($link, $query);
     while ($row = mysqli_fetch_assoc($result)) {
         echo $row;
-        echo 'hihihihi';
     }
     mysqli_close($link);
     echo 'finished';
