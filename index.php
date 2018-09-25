@@ -2,8 +2,12 @@
 require_once('db_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $sql = "INSERT INTO accounts (account_id, username, password) VALUES (NULL, 'test1', 'test2')";
-    $link->query($sql);
+    $user = $_POST['user'];
+    $pwd = $POST['pwd'];
+    $sql = $link->prepare("INSERT INTO accounts (account_id, username, password) VALUES (NULL, ?, ?)");
+    $sql->bind_param('ss', $user, $pwd);
+    $sql->execute();
+    $sql->close();
     $link->close();
 }
 
