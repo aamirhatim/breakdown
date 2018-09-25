@@ -12,12 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //   }
 
     $sql = $link->prepare("INSERT INTO accounts (account_id, email, username, password) VALUES (NULL, ?, ?, ?)");
-    $sql->bind_param('ss', $email, $user, $pwd);
-    $email = $_POST['email'];
-    $user = $_POST['user'];
-    $pwd = $_POST['pwd'];
+    $sql->bind_param('sss', $_POST['email'], $_POST['user'], $_POST['pwd']);
     $sql->execute();
     $sql->close();
+    $link->close();
 }
 
 ?>
