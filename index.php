@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // $result_arr[] = $result;
                 $count ++;
             }
-            if ($count > 1) {
+            if ($count > 0) {
                 $account_exists = 1;
                 echo '<h3>An account already exists for the given email!</h3>';
             }
