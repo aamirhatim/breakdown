@@ -9,12 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (mysqli_stmt_execute($sql)) {
         echo 'SUCCESS<br>';
         $sql->bind_result($result);
-        $all = $sql->get_result();
-        echo count($all);
+        $result_arr = array();
         while ($sql->fetch()) {
             echo $result;
             echo '<br>';
+            $result_arr[] = $result;
         }
+        echo count($result_arr);
+        echo '<br>';
     } else {
         echo 'FAILED<br>';
         echo mysqli_error($link);
