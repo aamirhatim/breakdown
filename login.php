@@ -13,17 +13,26 @@ require_once('db_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get username and pw info from database
-    if($sql = $link->prepare("SELECT * FROM accounts WHERE username = ? AND password = ?")) {
+    if($sql = $link->prepare("SELECT account_id FROM accounts WHERE username = ? AND password = ?")) {
         mysqli_stmt_bind_param($sql, 'ss', $user, $pwd);
         $user = htmlspecialchars($_POST['user']);
         $pwd = htmlspecialchars($_POST['pwd']);
         if (mysqli_stmt_execute($sql)) {
-            $count = 0;
-            while ($sql->fetch()) {
-                $count ++;
-            }
-            if ($count == 1) {
+            mysqli_stmt_store_result($sql);
+
+            // $count = 0;
+            // while ($sql->fetch()) {
+            //     $count ++;
+            // }
+            if (mysqli_stmt_num_rows($sql) == 1) {
                 echo '<h1>We have a match!</h1>';
+                // Start a new session
+                // session_start();
+                // $_SESSION["loggedin"] = true;
+                // $_SESSION["id"] = $id;
+                // $_SESSION["username"] = trim($_POST['user']); 
+            } else {
+                echo '<h1>The username/password was incorrect.</h1>';
             }
         } else {
             echo mysqli_error($link);
