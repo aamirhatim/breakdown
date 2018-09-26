@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (mysqli_stmt_num_rows($sql) == 1) {
                 mysqli_stmt_bind_result($sql, $account_id);
                 if(mysqli_stmt_fetch($sql)) {
-                    echo '<h1>We have a match!</h1>';
                     // Start a new session
                     session_start();
                     $_SESSION["loggedin"] = true;
@@ -31,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     // Redirect
                     header("location: welcome.php");
+                    echo '<h1>Welcome!</h1>';
                 }
             } else {
                 echo '<h1>The username/password was incorrect.</h1>';

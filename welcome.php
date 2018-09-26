@@ -20,7 +20,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     </head>
 
     <body>
-        <h1>YOURE LOGGED IN</h1>
+        <h1>YOU'RE LOGGED IN</h1>
         <p><br>Click <a href = 'logout.php'>here</a> to log out.</p>
     </body>
 </html>
