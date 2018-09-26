@@ -20,7 +20,9 @@ $(document).ready(function(){
       //     public_token: public_token,
       // }); 
       
-      $.post('save_token.php', {token: public_token, meta: metadata});
+      $.post('save_token.php', {token: public_token, meta: metadata}, function(result) {
+        $('#test').html('cool');
+      });
 
       // Print metadata
       // for (i = 0; i < metadata.length; i++) {
