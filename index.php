@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //     echo 'No rows!';
     // }
     print_r($_POST['email']);
-    $query = "SELECT * FROM accounts WHERE email =\'" . trim($_POST['email'] . "'");
+    $query = "SELECT * FROM accounts WHERE email ='" . trim($_POST['email'] . "'");
     print_r($query);
     $result = mysqli_query($link, $query);
     while ($row = mysqli_fetch_assoc($result)) {
