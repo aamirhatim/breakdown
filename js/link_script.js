@@ -21,7 +21,7 @@ $(document).ready(function(){
       // }); 
       
       $.post('save_token.php', {token: public_token, meta: metadata}, function(result) {
-        $('#test').html('cool');
+        $('#test').html(result);
       });
 
       // Print metadata
