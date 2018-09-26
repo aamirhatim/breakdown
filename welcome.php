@@ -31,8 +31,8 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
         (function($) {
         var handler = Plaid.create({
             clientName: 'Plaid Quickstart',
-            env: '<%= PLAID_ENV %>',
-            key: '<%= PLAID_PUBLIC_KEY %>',
+            env: 'development',
+            key: 'e9c860997945f73948b878031b4e66',
             product: ['transactions'],
             // Optional – use webhooks to get transaction and error updates
             webhook: 'https://requestb.in',
