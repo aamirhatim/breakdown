@@ -9,7 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (mysqli_stmt_execute($sql)) {
         echo 'SUCCESS';
         while ($sql->fetch()) {
-            echo 'hihi';
+            $sql->bind_result($result);
+            echo $result;
         }
     } else {
         echo 'FAILED';
