@@ -18,7 +18,6 @@ $(document).ready(function(){
         $.post('/get_access_token', {
             public_token: public_token,
         });
-        // document.write(public_token);
         // Run AJAX call to add token to server
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
