@@ -17,7 +17,7 @@ $(document).ready(function(){
       // user selected and the account ID or IDs, if the
       // Select Account view is enabled.
       $.post('save_token.php', {token: public_token, meta: metadata}, function(result) {
-        $('#test2').html(result);
+        $('#test').html(result);
       });
 
       },
