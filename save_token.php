@@ -7,8 +7,8 @@ require_once('db_config.php');
 
 // Exchange public token for access_token
 $public_token = htmlspecialchars($_POST['token']);
-// $meta = htmlspecialchars($_POST['meta']);
-echo $public_token;
+$meta = htmlspecialchars($_POST['meta']);
+echo $meta['institution']['name'];
 
 // $access_token = get_access_token($public_token);
 // echo $access_token['access_token'];
