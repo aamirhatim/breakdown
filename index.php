@@ -6,8 +6,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = $link->prepare("SELECT email FROM accounts WHERE email = '?'");
     mysqli_stmt_bind_param($sql, 's', $email);
     $email = htmlspecialchars($_POST['email']);
-    if ($result = mysqli_query($link, $sql)) {
+    if (mysqli_stmt_execute($sql)) {
         echo 'SUCCESS';
+        while ($sql->fetch()) {
+            echo 'hihi';
+        }
     } else {
         echo 'FAILED';
         echo mysqli_error($link);
