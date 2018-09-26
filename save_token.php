@@ -8,7 +8,8 @@ require_once('db_config.php');
 // Exchange public token for access_token
 $public_token = htmlspecialchars($_REQUEST['token']);
 $access_token = get_access_token($public_token);
-echo $access_token;
+echo $access_token['access_token'];
+echo $access_token['item_id'];
 
 // Check if token already exists for the client
 // $token_exists = 0;
