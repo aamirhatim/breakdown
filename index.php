@@ -18,8 +18,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    // If email doesn't exist, create a new account
+    // Check if username is available
     if (!$account_exists) {
+        $user_taken = 0;
+        if ($sql = $link->prepare("SELECT username FROM accounts WHERE username = ?")) {
+            mysqli_stmt_bind_param($sql, 's', $user);
+            $user = htmlspecialchars($_POST['user']);
+            if (mysqli_stmt_execute($sql)) {
+                mysqli_stmt_store_result($sql);
+                if (mysqli_stmt_num_rows($sql) > 0) {
+                    echo '<h3>That username has already been taken!</h3>';
+                    $user_taken = 1;
+                }
+            } else {
+                echo mysqli_error($link);
+            }
+        }
+    }
+
+    // If email doesn't exist, create a new account
+    if (!$account_exists && !$user_taken) {
         $sql = $link->prepare("INSERT INTO accounts (account_id, email, username, password) VALUES (NULL, ?, ?, ?)");
         $sql->bind_param('sss', $_POST['email'], $_POST['user'], $_POST['pwd']);
         $sql->execute();
