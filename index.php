@@ -11,8 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $sql->bind_result($result);
         $resultarr = array();
         while ($sql->fetch()) {
-            echo 'hihihi';
-            $resultarr[] = $result;
+            // $resultarr[] = $result;
             echo $result;
             echo '<br>';
         }
