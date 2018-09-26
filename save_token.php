@@ -47,6 +47,7 @@ $link->close();
 function get_access_token($public_token)
     {
         global $plaid_client_id, $plaid_secret, $plaid_url;
+        $plaid_url = "https://sandbox.plaid.com";
         $data = array(
             "client_id" => '5ba876b107df5000124dcbdd',
             "secret" => 'bdcd0bf9075a258404b52e1ec65c74',
