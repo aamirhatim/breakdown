@@ -18,32 +18,9 @@ $(document).ready(function(){
       // Select Account view is enabled.
       $.post('/get_access_token', {
           public_token: public_token,
-      });
+      });      
 
-      // Exchange public token for access_token
-      // var plaid = require('plaid');
-      // var access_token = null;
-      // var item_id = null;
-      // var client = new plaid.Client(
-      //   '5ba876b107df5000124dcbdd', // client ID
-      //   'bdcd0bf9075a258404b52e1ec65c74', // secret
-      //   'e9c860997945f73948b878031b4e66', // public key
-      //   plaid.environments.sandbox
-      // );
-      // client.exchangePublicToken(public_token, function(error, tokenResponse) {
-      //   if (error != null) {
-      //     // console.log('Could not exchange public_token!' + '\n' + error);
-      //     return response.json({error: msg});
-      //   }
-
-      //   access_token = tokenResponse.access_token;
-      //   item_id = tokenResponse.item_id;
-      // });
-
-      // document.getElementById("test").innerHTML = access_token;      
-
-      // document.getElementById("test").innerHTML = metadata;
-      // Run AJAX call to add token to server
+      // Run AJAX call to exchange public token for access token and add it to the database
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
