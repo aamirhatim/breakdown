@@ -17,7 +17,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
         <title>Welcome!</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
         <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-        <!-- <script src = 'js/link_script.js'></script> -->
+        <script src = 'js/link_script.js'></script>
     </head>
 
     <body>
@@ -26,7 +26,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
 
         <button id="link-button">Link Account</button>
         
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
         (function($) {
         var handler = Plaid.create({
             clientName: 'Plaid Quickstart',
@@ -75,6 +75,6 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
             handler.open();
         });
         })(jQuery);
-        </script>
+        </script> -->
     </body>
 </html>
