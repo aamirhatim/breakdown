@@ -3,11 +3,14 @@ require_once('db_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if email address already exists
-    $sql = $link->prepare("SELECT email FROM accounts WHERE email = ?");
-    $sql->execute([$_POST['email']]);
-    $result = $sql->fetchAll();
-    foreach ($result as $row) {
-        echo $row;
+    $sql = $link->prepare("SELECT email FROM accounts WHERE email = '?'");
+    mysqli_stmt_bind_param($sql, 's', $email);
+    $email = htmlspecialchars($_POST['email']);
+    if (mysqli_stmt_execute($sql)) {
+        echo 'SUCCESS';
+    } else {
+        echo 'FAILED';
+        echo mysqli_error($link);
     }
 
 
