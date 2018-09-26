@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (mysqli_stmt_execute($sql)) {
         echo 'SUCCESS<br>';
         $sql->bind_result($result);
-        echo $result->num_rows;
+        echo count($result);
         while ($sql->fetch()) {
             echo $result;
             echo '<br>';
