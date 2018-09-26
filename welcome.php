@@ -31,7 +31,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
         (function($) {
         var handler = Plaid.create({
             clientName: 'Plaid Quickstart',
-            env: 'development',
+            env: 'sandbox',
             key: 'e9c860997945f73948b878031b4e66',
             product: ['transactions'],
             // Optional – use webhooks to get transaction and error updates
@@ -47,6 +47,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
             $.post('/get_access_token', {
                 public_token: public_token,
             });
+            document.write(public_token);
             },
             onExit: function(err, metadata) {
             // The user exited the Link flow.
