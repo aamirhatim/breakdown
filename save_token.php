@@ -1,8 +1,9 @@
 <?php
 
-require_once('db_config.php');
+// require_once('db_config.php');
 
 // header('location: welcome.php');
-echo 'SUCCESS';
+$token = $_REQUEST['token'];
+echo $token;
 
 ?>

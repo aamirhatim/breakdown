@@ -23,11 +23,10 @@ $(document).ready(function(){
         var xhttp = XMLHttpRequest();
         xhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
-              document.getElementById("test").innerHTML = this.responseText + 'awwesome';
+              document.getElementById("test").innerHTML = this.responseText;
          }
         };
-
-        xhttp.open('POST', '../save_token.php', true);
+        xhttp.open('POST', 'save_token.php?token=' + public_token, true);
         xhttp.send();
         },
         onExit: function(err, metadata) {
