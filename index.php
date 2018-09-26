@@ -8,11 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         mysqli_stmt_bind_param($sql, 's', $email);
         $email = htmlspecialchars($_POST['email']);
         if (mysqli_stmt_execute($sql)) {
-            // $sql->bind_result($result);
             $count = 0;
-            // $result_arr = array();
             while ($sql->fetch()) {
-                // $result_arr[] = $result;
                 $count ++;
             }
             if ($count > 0) {
@@ -24,11 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+    // If email doesn't exist, create a new account
     if (!$account_exists) {
         $sql = $link->prepare("INSERT INTO accounts (account_id, email, username, password) VALUES (NULL, ?, ?, ?)");
         $sql->bind_param('sss', $_POST['email'], $_POST['user'], $_POST['pwd']);
         $sql->execute();
         $sql->close();
+        echo '<h3>New Account created!</h3>';
     }
 }
 $link->close();
@@ -48,5 +47,7 @@ $link->close();
             <input type = 'text' name = 'pwd'>
             <input type = 'submit' value = 'Submit'>
         </form>
+
+        <p><br>Or log in <a href = 'login.php'>here</a></p>
     </body>
 </html>
