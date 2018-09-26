@@ -20,6 +20,11 @@ $(document).ready(function(){
           public_token: public_token,
       });      
 
+      // Print metadata
+      for (i = 0; i < metadata.length; i++) {
+        document.getElementById("test").innerHTML += (i+1) + ": " + array[i];
+      }
+
       // Run AJAX call to exchange public token for access token and add it to the database
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
