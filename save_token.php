@@ -8,40 +8,38 @@ require_once('db_config.php');
 // Exchange public token for access_token
 $public_token = htmlspecialchars($_POST['token']);
 $meta = $_POST['meta'];
-echo $meta['institution']['name'];
 
-// $access_token = get_access_token($public_token);
-// echo $access_token['access_token'];
-// echo '<br>' . $access_token['item_id'];
+// Check if account has already been added
+$account_exists = 0;
+if($sql = $link->prepare("SELECT account_id FROM tokens WHERE account_id = ?, account_mask = ?, account_name = ?")) {
+    mysqli_stmt_bind_param($sql, 'iis', $account_id, $account_mask, $account_name);
+    $account_id = $_SESSION['id'];
+    $account_mask = $meta['account']['mask'];
+    $account_name = $meta['account']['name'];
+    if (mysqli_stmt_execute($sql)) {
+        mysqli_stmt_store_result($sql);
+        if (mysqli_stmt_num_rows($sql) > 0) {
+            echo '<h3>This bank account has already been linked!</h3>';
+            $token_exists = 1;
+        }
+    } else {
+        echo mysqli_error($link);
+    }
+}
 
-// Check if token already exists for the client
-// $token_exists = 0;
-// if($sql = $link->prepare("SELECT account_id FROM tokens WHERE access_token = ?")) {
-//     mysqli_stmt_bind_param($sql, 's', $access_token);
-//     $access_token = htmlspecialchars($_POST['token']);
-//     if (mysqli_stmt_execute($sql)) {
-//         mysqli_stmt_store_result($sql);
-//         if (mysqli_stmt_num_rows($sql) > 0) {
-//             echo '<h3>This bank account has already been linked!</h3>';
-//             $token_exists = 1;
-//         }
-//     } else {
-//         echo mysqli_error($link);
-//     }
-// }
-
-// If token does not exist, add it to the database
-// if (!$token_exists) {
-//     if($sql = $link->prepare("INSERT INTO tokens (account_id, access_token) VALUES (?, ?)")) {
-//         mysqli_stmt_bind_param($sql, 'is', $account_id, $access_token);
-//         $account_id = $_SESSION['id'];
-//         if(mysqli_stmt_execute($sql)) {
-//             echo '<h3>New bank account added!</h3>';
-//         } else {
-//             echo mysqli_error($link);
-//         }
-//     }
-// }
+// If account does not exist, add it to the database
+if (!$token_exists) {
+    if($sql = $link->prepare("INSERT INTO tokens (account_id, account_mask, account_name, institution, access_token) VALUES (?, ?, ?, ?, ?)")) {
+        mysqli_stmt_bind_param($sql, 'iisss', $account_id, $account_mask, $account_name, $institution, $access_token);
+        $institution = $meta['institution']['name'];
+        $access_token = get_access_token($public_token);
+        if(mysqli_stmt_execute($sql)) {
+            echo '<h3>New bank account added!</h3>';
+        } else {
+            echo mysqli_error($link);
+        }
+    }
+}
 $link->close();
 
 
