@@ -13,15 +13,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // } else {
     //     echo 'No rows!';
     // }
+
+
     print_r($_POST['email']);
-    $query = "SELECT * FROM accounts WHERE email ='" . trim($_POST['email'] . "'");
+    echo '\n';
+    $query = "SELECT email FROM accounts WHERE email ='" . trim($_POST['email'] . "'");
     print_r($query);
+    echo '\n';
     $result = mysqli_query($link, $query);
     while ($row = mysqli_fetch_assoc($result)) {
         echo $row;
+        echo '\n';
     }
     mysqli_close($link);
+
+
     echo 'finished';
+    echo '\n';
 
 
     // $sql = $link->prepare("INSERT INTO accounts (account_id, email, username, password) VALUES (NULL, ?, ?, ?)");
