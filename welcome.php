@@ -1,3 +1,18 @@
+<?php
+
+// Init a session
+session_start();
+
+// Check if user is already logged in
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    exit;
+} else {
+    header("location: index.php");
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
