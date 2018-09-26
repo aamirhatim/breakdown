@@ -12,7 +12,7 @@ $meta = $_POST['meta'];
 // Check if account has already been added
 $account_exists = 0;
 if($sql = $link->prepare("SELECT account_id FROM tokens WHERE account_id = ?, account_mask = ?, account_name = ?")) {
-    mysqli_stmt_bind_param($sql, 'iis', $account_id, $account_mask, $account_name);
+    mysqli_stmt_bind_param($sql, 'iss', $account_id, $account_mask, $account_name);
     $account_id = $_SESSION['id'];
     $account_mask = $meta['account']['mask'];
     $account_name = $meta['account']['name'];
@@ -30,12 +30,13 @@ if($sql = $link->prepare("SELECT account_id FROM tokens WHERE account_id = ?, ac
 // If account does not exist, add it to the database
 if (!$token_exists) {
     if($sql = $link->prepare("INSERT INTO tokens (account_id, account_mask, account_name, institution, access_token) VALUES (?, ?, ?, ?, ?)")) {
-        mysqli_stmt_bind_param($sql, 'iisss', $account_id, $account_mask, $account_name, $institution, $access_token);
+        mysqli_stmt_bind_param($sql, 'issss', $account_id, $account_mask, $account_name, $institution, $access_token);
         $account_id = $_SESSION['id'];
         $account_mask = $meta['account']['mask'];
         $account_name = $meta['account']['name'];
         $institution = $meta['institution']['name'];
-        $access_token = get_access_token($public_token);
+        $exchange = get_access_token($public_token);
+        $access_token = $exchange['access_token'];
         if(mysqli_stmt_execute($sql)) {
             echo '<h3>New bank account added!</h3>';
         } else {
