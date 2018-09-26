@@ -15,9 +15,9 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
 <html>
     <head>
         <title>Welcome!</title>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
         <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-        <script src = 'js/link_script.js'></script> -->
+        <!-- <script src = 'js/link_script.js'></script> -->
     </head>
 
     <body>
@@ -25,8 +25,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
         <p><br>Click <a href = 'logout.php'>here</a> to log out.</p>
 
         <button id="link-button">Link Account</button>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-        <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+        
         <script type="text/javascript">
         (function($) {
         var handler = Plaid.create({
