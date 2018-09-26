@@ -7,13 +7,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     mysqli_stmt_bind_param($sql, 's', $email);
     $email = htmlspecialchars($_POST['email']);
     if (mysqli_stmt_execute($sql)) {
-        echo 'SUCCESS';
+        echo 'SUCCESS<br>';
+        $sql->bind_result($result);
+        $resultarr = array();
         while ($sql->fetch()) {
-            $sql->bind_result($result);
+            echo 'hihihi';
+            $resultarr[] = $result;
             echo $result;
+            echo '<br>';
         }
     } else {
-        echo 'FAILED';
+        echo 'FAILED<br>';
         echo mysqli_error($link);
     }
 
