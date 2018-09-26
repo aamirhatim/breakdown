@@ -10,7 +10,7 @@ $_SESSION = array();
 session_destroy();
 
 // Redirect to main page
-header(index.php);
+header('location: index.php');
 exit;
 
 ?>
