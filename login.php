@@ -1,13 +1,13 @@
 <?php
 
 // Init a session
-// session_start();
+session_start();
 
-// // Check if user is already logged in
-// if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-//     header("location: welcome.php");
-//     exit;
-// }
+// Check if user is already logged in
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    header("location: welcome.php");
+    exit;
+}
 
 require_once('db_config.php');
 
@@ -19,18 +19,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $pwd = htmlspecialchars($_POST['pwd']);
         if (mysqli_stmt_execute($sql)) {
             mysqli_stmt_store_result($sql);
-
-            // $count = 0;
-            // while ($sql->fetch()) {
-            //     $count ++;
-            // }
             if (mysqli_stmt_num_rows($sql) == 1) {
-                echo '<h1>We have a match!</h1>';
-                // Start a new session
-                // session_start();
-                // $_SESSION["loggedin"] = true;
-                // $_SESSION["id"] = $id;
-                // $_SESSION["username"] = trim($_POST['user']); 
+                mysqli_stmt_bind_result($sql, $account_id);
+                if(mysqli_stmt_fetch($sql)) {
+                    echo '<h1>We have a match!</h1>';
+                    // Start a new session
+                    session_start();
+                    $_SESSION["loggedin"] = true;
+                    $_SESSION["id"] = $account_id;
+                    $_SESSION["username"] = trim($_POST['user']);
+
+                    // Redirect
+                    header("location: welcome.php");
+                }
             } else {
                 echo '<h1>The username/password was incorrect.</h1>';
             }
