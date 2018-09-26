@@ -20,7 +20,7 @@ if($sql = $link->prepare("SELECT account_id FROM tokens WHERE account_id = ?, ac
         mysqli_stmt_store_result($sql);
         if (mysqli_stmt_num_rows($sql) > 0) {
             echo '<h3>This bank account has already been linked!</h3>';
-            $token_exists = 1;
+            $account_exists = 1;
         }
     } else {
         echo mysqli_error($link);
@@ -28,7 +28,7 @@ if($sql = $link->prepare("SELECT account_id FROM tokens WHERE account_id = ?, ac
 }
 
 // If account does not exist, add it to the database
-if (!$token_exists) {
+if (!$account_exists) {
     if($sql = $link->prepare("INSERT INTO tokens (account_id, account_mask, account_name, institution, access_token) VALUES (?, ?, ?, ?, ?)")) {
         mysqli_stmt_bind_param($sql, 'issss', $account_id, $account_mask, $account_name, $institution, $access_token);
         $account_id = $_SESSION['id'];

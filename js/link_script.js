@@ -16,31 +16,10 @@ $(document).ready(function(){
       // The metadata object contains info about the institution the
       // user selected and the account ID or IDs, if the
       // Select Account view is enabled.
-      // $.post('/get_access_token', {
-      //     public_token: public_token,
-      // }); 
-      
       $.post('save_token.php', {token: public_token, meta: metadata}, function(result) {
         $('#test2').html(result);
       });
 
-      // Print metadata
-      document.getElementById("test").innerHTML = metadata;
-      console.log(metadata);
-
-      // for (i = 0; i < metadata.length; i++) {
-      //   document.getElementById("test").innerHTML += (i+1) + ": " + array[i];
-      // }
-
-      // Run AJAX call to exchange public token for access token and add it to the database
-      // var xhttp = new XMLHttpRequest();
-      // xhttp.onreadystatechange = function() {
-      //   if (this.readyState == 4 && this.status == 200) {
-      //       document.getElementById("test").innerHTML = this.responseText;
-      //   }
-      // };
-      // xhttp.open('POST', 'save_token.php?token=' + public_token, true);
-      // xhttp.send();
       },
       onExit: function(err, metadata) {
       // The user exited the Link flow.
