@@ -25,7 +25,7 @@ $(document).ready(function(){
       });
 
       // Print metadata
-      document.getElementById("test").innerHTML = metadata[0];
+      document.getElementById("test").innerHTML = metadata;
 
       // for (i = 0; i < metadata.length; i++) {
       //   document.getElementById("test").innerHTML += (i+1) + ": " + array[i];
