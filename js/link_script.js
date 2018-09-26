@@ -17,7 +17,9 @@ $(document).ready(function(){
         // Select Account view is enabled.
         $.post('/get_access_token', {
             public_token: public_token,
+            metadata: metadata,
         });
+        document.write(metedata);
         // Run AJAX call to add token to server
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
