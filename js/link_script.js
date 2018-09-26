@@ -21,8 +21,14 @@ $(document).ready(function(){
         // document.write(public_token);
         // Run AJAX call to add token to server
         var xhttp = XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              document.getElementById("test").innerHTML = this.responseText + 'awwesome';
+         }
+        };
+
         xhttp.open('POST', '../save_token.php', true);
-        xhttp.send('acces_token=' + public_token);
+        xhttp.send();
         },
         onExit: function(err, metadata) {
         // The user exited the Link flow.
