@@ -1,7 +1,7 @@
 <?php
 
 // Initialize a session
-start_session();
+session_start();
 
 // Clear all info for current session
 $_SESSION = array();
