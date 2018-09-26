@@ -3,49 +3,35 @@ require_once('db_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if email address already exists
-    $sql = $link->prepare("SELECT email FROM accounts WHERE email = ?");
-    $sql->bind_param($sql, 's', $email);
-    $email = htmlspecialchars($_POST['email']);
-    if ($sql->execute($sql)) {
-        echo 'SUCCESS<br>';
-        $sql->bind_result($result);
-        $result_arr = array();
-        while ($sql->fetch()) {
-            echo $result;
-            echo '<br>';
-            $result_arr[] = $result;
+    $account_exists = 0;
+    if($sql = $link->prepare("SELECT email FROM accounts WHERE email = ?")) {
+        mysqli_stmt_bind_param($sql, 's', $email);
+        $email = htmlspecialchars($_POST['email']);
+        if (mysqli_stmt_execute($sql)) {
+            // $sql->bind_result($result);
+            $count = 0;
+            // $result_arr = array();
+            while ($sql->fetch()) {
+                // $result_arr[] = $result;
+                $count ++;
+            }
+            if ($count > 1) {
+                $account_exists = 1;
+                echo '<h3>An account already exists for the given email!</h3>';
+            }
+        } else {
+            echo mysqli_error($link);
         }
-        echo count($result_arr);
-        echo '<br>';
-    } else {
-        echo 'FAILED<br>';
-        echo mysqli_error($link);
     }
 
-
-    // print_r($_POST['email']);
-    // echo '<br>';
-    // $query = "SELECT email FROM accounts WHERE email ='" . trim($_POST['email'] . "'");
-    // print_r($query);
-    // echo '<br>';
-    // $result = mysqli_query($link, $query);
-    // while ($row = mysqli_fetch_assoc($result)) {
-    //     echo $row;
-    //     echo '<br>';
-    // }
-    // mysqli_close($link);
-
-
-    // echo 'finished';
-    // echo '<br>';
-
-
-    // $sql = $link->prepare("INSERT INTO accounts (account_id, email, username, password) VALUES (NULL, ?, ?, ?)");
-    // $sql->bind_param('sss', $_POST['email'], $_POST['user'], $_POST['pwd']);
-    // $sql->execute();
-    // $sql->close();
-    $link->close();
+    if (!$account_exists) {
+        $sql = $link->prepare("INSERT INTO accounts (account_id, email, username, password) VALUES (NULL, ?, ?, ?)");
+        $sql->bind_param('sss', $_POST['email'], $_POST['user'], $_POST['pwd']);
+        $sql->execute();
+        $sql->close();
+    }
 }
+$link->close();
 
 ?>
 
