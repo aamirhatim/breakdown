@@ -11,7 +11,7 @@ $meta = $_POST['meta'];
 
 // Check if account has already been added
 $account_exists = 0;
-if($sql = $link->prepare("SELECT account_id FROM tokens WHERE account_id = ?, account_mask = ?, account_name = ?")) {
+if($sql = $link->prepare("SELECT account_id FROM tokens WHERE account_id = ? AND account_mask = ? AND account_name = ?")) {
     mysqli_stmt_bind_param($sql, 'iss', $account_id, $account_mask, $account_name);
     $account_id = $_SESSION['id'];
     $account_mask = $meta['account']['mask'];
