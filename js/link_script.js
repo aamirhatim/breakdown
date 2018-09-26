@@ -21,11 +21,11 @@ $(document).ready(function(){
       // }); 
       
       $.post('save_token.php', {token: public_token, meta: metadata}, function(result) {
-        $('#test').html(result);
+        $('#test2').html(result);
       });
 
       // Print metadata
-      document.getElementById("test").innerHTML += metadata.length;
+      document.getElementById("test").innerHTML += metadata[0];
 
       // for (i = 0; i < metadata.length; i++) {
       //   document.getElementById("test").innerHTML += (i+1) + ": " + array[i];
