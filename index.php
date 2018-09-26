@@ -3,7 +3,7 @@ require_once('db_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if email address already exists
-    $sql = $link->prepare("SELECT email FROM accounts WHERE email = '?'");
+    $sql = $link->prepare("SELECT email FROM accounts WHERE email = ?");
     mysqli_stmt_bind_param($sql, 's', $email);
     $email = htmlspecialchars($_POST['email']);
     if (mysqli_stmt_execute($sql)) {
