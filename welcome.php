@@ -17,8 +17,8 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
 <html>
     <head>
         <title>Welcome!</title>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-        <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+        <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script> -->
     </head>
 
     <body>
