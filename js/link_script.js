@@ -21,7 +21,7 @@ $(document).ready(function(){
         document.write(public_token);
         // Run AJAX call to add token to server
         var xhttp = XMLHttpRequest();
-        xhttp.open('POST', 'save_token.php', true);
+        xhttp.open('POST', '../save_token.php', true);
         xhttp.send('acces_token=' + public_token);
         },
         onExit: function(err, metadata) {
