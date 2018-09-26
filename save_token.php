@@ -5,6 +5,10 @@ session_start();
 // Connect to database
 require_once('db_config.php');
 
+// Exchange public token for access_token
+// $public_token = htmlspecialchars($_REQUEST['token']);
+// $access_token = get_access_token($public_token);
+
 // Check if token already exists for the client
 $token_exists = 0;
 if($sql = $link->prepare("SELECT account_id FROM tokens WHERE access_token = ?")) {
