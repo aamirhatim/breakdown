@@ -23,7 +23,7 @@ if($sql = $link->prepare("SELECT account_id FROM tokens WHERE access_token = ?")
 if (!$token_exists) {
     if($sql = $link->prepare("INSERT INTO tokens (account_id, access_token) VALUES (?, ?)")) {
         mysqli_stmt_bind_param($sql, 'is', $account_id, $access_token);
-        $account_id = $_REQUEST['id'];
+        $account_id = $_SESSION['id'];
         if(mysqli_stmt_execute($sql)) {
             echo '<h3>New bank account added!</h3>';
         } else {
