@@ -6,7 +6,7 @@ session_start();
 require_once('db_config.php');
 
 // Exchange public token for access_token
-$public_token = htmlspecialchars($_REQUEST['token']);
+$public_token = htmlspecialchars($_POST['token']);
 $access_token = get_access_token($public_token);
 echo $access_token['access_token'];
 echo '<br>' . $access_token['item_id'];
@@ -15,7 +15,7 @@ echo '<br>' . $access_token['item_id'];
 $token_exists = 0;
 if($sql = $link->prepare("SELECT account_id FROM tokens WHERE access_token = ?")) {
     mysqli_stmt_bind_param($sql, 's', $access_token);
-    $access_token = htmlspecialchars($_REQUEST['token']);
+    $access_token = htmlspecialchars($_POST['token']);
     if (mysqli_stmt_execute($sql)) {
         mysqli_stmt_store_result($sql);
         if (mysqli_stmt_num_rows($sql) > 0) {
