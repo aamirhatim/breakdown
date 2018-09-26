@@ -9,9 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (mysqli_stmt_execute($sql)) {
         echo 'SUCCESS<br>';
         $sql->bind_result($result);
-        $resultarr = array();
+        echo $result->num_rows;
         while ($sql->fetch()) {
-            // $resultarr[] = $result;
             echo $result;
             echo '<br>';
         }
