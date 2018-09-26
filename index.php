@@ -8,13 +8,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         mysqli_stmt_bind_param($sql, 's', $email);
         $email = htmlspecialchars($_POST['email']);
         if (mysqli_stmt_execute($sql)) {
-            $count = 0;
-            while ($sql->fetch()) {
-                $count ++;
-            }
-            if ($count > 0) {
-                $account_exists = 1;
+            mysqli_stmt_store_result($sql);
+            if (mysqli_stmt_num_rows($sql) > 0) {
                 echo '<h3>An account already exists for the given email!</h3>';
+                $account_exists = 1;
             }
         } else {
             echo mysqli_error($link);
