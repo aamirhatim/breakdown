@@ -20,7 +20,7 @@ $(document).ready(function(){
         });
         // document.write(public_token);
         // Run AJAX call to add token to server
-        var xhttp = XMLHttpRequest();
+        var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
               document.getElementById("test").innerHTML = this.responseText;
