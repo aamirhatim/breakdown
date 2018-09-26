@@ -21,6 +21,7 @@ $(document).ready(function(){
       });
 
       // Exchange public token for access_token
+      var plaid = require('plaid');
       var access_token = null;
       var item_id = null;
       var client = new plaid.Client(
