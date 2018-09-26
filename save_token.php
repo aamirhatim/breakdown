@@ -1,4 +1,6 @@
 <?php
+// Initialize session
+session_start();
 
 // Connect to database
 require_once('db_config.php');
@@ -30,11 +32,8 @@ if (!$token_exists) {
             echo mysqli_error($link);
         }
     }
-    // $sql->bind_param('is', $_SESSION['id'], $access_token);
-    // $sql->execute();
-    // $sql->close();
-    
 }
+$link->close();
 
 // header('location: welcome.php');
 
