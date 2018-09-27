@@ -27,15 +27,24 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
 
         <h2>Your Accounts</h2>
         <div id = 'accounts'>
-            <table></table>
-            <?php
-            include('db_service.php');
-            $result = get_all_accounts();
-            $result->bind_result($account_name, $institution);
-            while ($result->fetch()) {
-                echo $account_name . ' ' . $institution . '<br>';
-            }
-            ?>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Institution</th>
+                </tr>
+
+                <?php
+                include('db_service.php');
+                $result = get_all_accounts();
+                $result->bind_result($account_name, $institution);
+                while ($result->fetch()) {
+                    echo '<tr>';
+                    echo '<td>' . $account_name . '</td>';
+                    echo '<td>' . $institution . '</td>';
+                    echo '</tr>';
+                }
+                ?>
+            </table>
         </div>
 
         <button id="link-button">Link Account</button>
