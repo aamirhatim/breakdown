@@ -50,10 +50,13 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
         <h2>Transactions</h2>
         <div id = 'transactions'>
             <?php
+            include('plaid_service.php');
             $result = get_tokens();
             $result->bind_result($token);
             while ($result->fetch()) {
-                echo $token;
+                echo $token . '<br>';
+                $transactions = call_plaid_service($token, 'transaction');
+                echo $transactions . '<br>';
             }
             ?>
         </div>
