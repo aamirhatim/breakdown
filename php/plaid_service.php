@@ -1,17 +1,21 @@
 <?php
 
 function call_plaid_service($token, $action) {
+    $plaid_url = "https://sandbox.plaid.com";
+    $client_id = '5ba876b107df5000124dcbdd';
+    $secret = 'bdcd0bf9075a258404b52e1ec65c74';
+
     if ($action == 'exchange') {
         $data = array(
-            "client_id" => $plaid_client_id,
-            "secret" => $plaid_secret,
+            "client_id" => $client_id,
+            "secret" => $secret,
             "public_token"=>$token
         );
         $url = '/item/public_token/exchange';
     } else {
         $data = array(
-            "client_id" => $plaid_client_id,
-            "secret" => $plaid_secret,
+            "client_id" => $client_id,
+            "secret" => $secret,
             "access_token"=>$token
         ); 
     }
