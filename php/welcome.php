@@ -47,6 +47,11 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
             </table>
         </div>
 
+        <h2>Transactions</h2>
+        <div id = 'transactions'>
+                <?php get_tokens(); ?>
+        </div>
+
         <button id="link-button">Link Account</button>
         
     </body>
