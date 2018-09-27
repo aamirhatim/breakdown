@@ -19,9 +19,7 @@ function call_plaid_service($token, $action) {
             "access_token"=>$token,
             "start_date"=> '2018-01-01',
             "end_date"=> '2018-06-01',
-            {
-                "account_ids"=>['Jrl1LVQAGjUMQzyZqzXpil3MmZzXzjidkkrwd']
-            }
+            "options"=> ["account_ids"=>['Jrl1LVQAGjUMQzyZqzXpil3MmZzXzjidkkrwd']]
         );
         $url = '/transactions/get';
     } else {
