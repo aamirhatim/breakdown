@@ -5,7 +5,9 @@ function get_all_accounts() {
     if ($sql = $link->prepare('SELECT * FROM tokens WHERE account_id = ?')) {
         echo 'hello';
         $sql->bind_param('i', $account_id);
+        echo 'hello2';
         $account_id = $_SESSION['id'];
+        echo 'hello3';
         if ($sql->execute()) {
             $result = $sql->get_result();
             if ($result->num_rows > 0) {
