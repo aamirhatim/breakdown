@@ -55,7 +55,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
             $result->bind_result($token);
             while ($result->fetch()) {
                 echo $token . '<br>';
-                $transactions = call_plaid_service($token, 'transaction');
+                $transactions = call_plaid_service($token, 'transactions');
                 print_r($transactions);
                 echo '<br>';
                 // foreach ($transactions as $item) {
