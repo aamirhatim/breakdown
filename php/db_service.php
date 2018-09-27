@@ -6,8 +6,8 @@ function get_all_accounts() {
         $sql->bind_param('i', $account_id);
         $account_id = $_SESSION['id'];
         if ($sql->execute()) {
-            echo 'hello';
             $result = $sql->get_result();
+            echo 'hello';
             if ($result->num_rows > 0) {
                 echo 'hello!';
             } else {
