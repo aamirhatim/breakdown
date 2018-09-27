@@ -26,7 +26,12 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
         <p id = 'test'></p>
 
         <h2>Your Accounts</h2>
-        <div id = 'accounts'></div>
+        <div id = 'accounts'>
+            <?php
+            include('db_service.php');
+            get_all_accounts();
+            ?>
+        </div>
 
         <button id="link-button">Link Account</button>
         
