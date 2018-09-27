@@ -5,7 +5,7 @@ $(document).ready(function(){
       clientName: 'Plaid Quickstart',
       env: 'sandbox',
       key: 'e9c860997945f73948b878031b4e66',
-      product: ['auth', 'transactions', 'identity', 'balance'],
+      product: ['auth', 'transactions', 'identity'],
       // Optional – use webhooks to get transaction and error updates
       webhook: 'https://requestb.in',
       onLoad: function() {
