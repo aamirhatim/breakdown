@@ -6,7 +6,7 @@ function get_all_accounts() {
         $sql->bind_param('i', $account_id);
         $account_id = $_SESSION['id'];
         if ($sql->execute()) {
-            $sql->bind_result($account_name, $institution);
+            // $sql->bind_result($account_name, $institution);
             return $sql;
         }
     }
