@@ -1,6 +1,6 @@
 <?php
 
-function plaid_service($token, $action) {
+function call_plaid_service($token, $action) {
     if ($action == 'exchange') {
         $data = array(
             "client_id" => $plaid_client_id,
