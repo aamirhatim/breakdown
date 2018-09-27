@@ -12,8 +12,15 @@ function get_all_accounts() {
                 echo 'hello!';
             } else {
                 echo 'NO';
+                echo mysqli_error($link);
             }
+        } else {
+            echo 'NO no';
+            echo mysqli_error($link);
         }
+    } else {
+        echo 'NO NO';
+        echo mysqli_error($link);
     }
 }
 
