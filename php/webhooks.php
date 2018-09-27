@@ -8,7 +8,7 @@ if($json = json_decode(file_get_contents("php://input"), true)) {
     $data = $_POST;
 }
 
-if ($data['webhook_code'] == 'DEFAULT_UPUDATE') {
+if ($data['webhook_code'] == 'DEFAULT_UPDATE') {
     print_r('default update');
 }
 
