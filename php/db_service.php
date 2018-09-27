@@ -1,8 +1,7 @@
 <?php
-// Establish DB connection
-include('db_config.php');
 
 function get_all_accounts() {
+    include('db_config.php');
     if ($sql = $link->prepare('SELECT * FROM tokens WHERE account_id = ?')) {
         echo 'hello';
         // $sql->bind_param('i', $account_id);
@@ -23,6 +22,8 @@ function get_all_accounts() {
         echo 'NO NO';
         echo mysqli_error($link);
     }
+
+    $link->close();
 }
 
 ?>
