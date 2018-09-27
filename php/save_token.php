@@ -1,7 +1,7 @@
 <?php
 
 // Load Plaid service function
-// include('plaid_service.php');
+include('plaid_service.php');
 
 // Initialize session
 session_start();
@@ -39,7 +39,7 @@ if (!$account_exists) {
         $account_mask = $meta['account']['mask'];
         $account_name = $meta['account']['name'];
         $institution = $meta['institution']['name'];
-        $exchange = get_access_token($public_token);
+        $exchange = call_plaid_service($public_token, 'exchange');
         $access_token = $exchange['access_token'];
         if(mysqli_stmt_execute($sql)) {
             echo '<h3>New bank account added!</h3>';
