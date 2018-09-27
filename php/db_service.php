@@ -14,7 +14,7 @@ function get_all_accounts() {
 
 function get_tokens() {
     include('db_config.php');
-    if ($sql = $link->prepare('SELECT access_token FROM tokens WHERE account_id = ?')) {
+    if ($sql = $link->prepare('SELECT access_token, bank_account_id FROM tokens WHERE account_id = ? AND active = "1"')) {
         $sql->bind_param('i', $account_id);
         $account_id = $_SESSION['id'];
         if ($sql->execute()) {

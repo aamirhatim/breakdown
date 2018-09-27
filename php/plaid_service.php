@@ -1,6 +1,6 @@
 <?php
 
-function call_plaid_service($token, $action) {
+function call_plaid_service($token, $action, $bank_account_id) {
     $plaid_url = "https://sandbox.plaid.com";
     $client_id = '5ba876b107df5000124dcbdd';
     $secret = 'bdcd0bf9075a258404b52e1ec65c74';
@@ -18,7 +18,8 @@ function call_plaid_service($token, $action) {
             "secret" => $secret,
             "access_token"=>$token,
             "start_date"=> '2018-01-01',
-            "end_date"=> '2018-06-01'
+            "end_date"=> '2018-06-01',
+            "options"=> ['account_ids'=>[$bank_account_id]]
         );
         $url = '/transactions/get';
     } else {
