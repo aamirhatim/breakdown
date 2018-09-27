@@ -6,13 +6,8 @@ function get_all_accounts() {
         $sql->bind_param('i', $account_id);
         $account_id = $_SESSION['id'];
         if ($sql->execute()) {
-            // $result = $sql->get_result();
             $sql->bind_result($account_name, $institution);
-            $count = 0;
-            while ($sql->fetch()) {
-                $count ++;
-                echo $account_name . ' ' . $institution;
-            }
+            return $sql;
         }
     }
 
