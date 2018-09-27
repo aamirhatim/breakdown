@@ -30,6 +30,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
             <?php
             include('db_service.php');
             $result = get_all_accounts();
+            $result->bind_result($account_name, $institution);
             while ($result->fetch()) {
                 echo $account_name . ' ' . $institution . '<br>';
             }
