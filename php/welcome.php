@@ -49,7 +49,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
 
         <h2>Transactions</h2>
         <div id = 'transactions'>
-                <?php get_tokens(); ?>
+                <?php include('get_transactions.php'); ?>
         </div>
 
         <button id="link-button">Link Account</button>

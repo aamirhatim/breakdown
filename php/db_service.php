@@ -9,7 +9,6 @@ function get_all_accounts() {
             return $sql;
         }
     }
-
     $link->close();
 }
 
@@ -22,7 +21,6 @@ function get_tokens() {
             return $sql;
         }
     }
-
     $link->close();
 }
 
