@@ -29,7 +29,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
         <div id = 'accounts'>
             <?php
             include('db_service.php');
-            get_all_accounts();
+            // get_all_accounts();
             ?>
         </div>
 
