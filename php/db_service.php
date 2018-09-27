@@ -8,13 +8,11 @@ function get_all_accounts() {
         if ($sql->execute()) {
             // $result = $sql->get_result();
             $sql->bind_result($account_name, $institution);
-            echo 'hello';
-            // if ($result->num_rows > 0) {
-            //     echo 'hello!';
-            // } else {
-            //     echo 'NO';
-            //     echo mysqli_error($link);
-            // }
+            $count = 0;
+            while ($sql->fetch()) {
+                $count ++;
+                echo $account_name . ' ' . $institution;
+            }
         }
     }
 
