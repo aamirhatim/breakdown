@@ -27,6 +27,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
 
         <h2>Your Accounts</h2>
         <div id = 'accounts'>
+            <table></table>
             <?php
             include('db_service.php');
             $result = get_all_accounts();
