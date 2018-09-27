@@ -1,11 +1,11 @@
 $(document).ready(function(){
   (function($) {
     var handler = Plaid.create({
-      selectAccount: false,
+      selectAccount: true,
       clientName: 'Plaid Quickstart',
       env: 'sandbox',
       key: 'e9c860997945f73948b878031b4e66',
-      product: ['transactions'],
+      product: ['auth', 'transactions', 'identity', 'balance'],
       // Optional – use webhooks to get transaction and error updates
       webhook: 'https://requestb.in',
       onLoad: function() {
