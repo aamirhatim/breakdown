@@ -12,12 +12,21 @@ function call_plaid_service($token, $action) {
             "public_token"=>$token
         );
         $url = '/item/public_token/exchange';
+    } else if ($action == 'transactions') {
+        $data = array(
+            "client_id" => $client_id,
+            "secret" => $secret,
+            "access_token"=>$token,
+            "start_date"=> '2018-01-01',
+            "end_date"=> '2018-06-01'
+        );
+        $url = '/transactions/get';
     } else {
         $data = array(
             "client_id" => $client_id,
             "secret" => $secret,
             "access_token"=>$token
-        ); 
+        );
     }
 
     $data_fields = json_encode($data);
@@ -26,8 +35,6 @@ function call_plaid_service($token, $action) {
         $url = '/accounts/balance/get';
     } else if ($action == 'identity') {
         $url = '/identity/get';
-    } else if ($action == 'transactions') {
-        $url = '/transactions/get';
     } else if ($action == 'income') {
         $url = '/income/get';
     }
