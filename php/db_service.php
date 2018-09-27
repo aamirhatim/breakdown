@@ -9,7 +9,7 @@ function get_all_accounts() {
             if($result = $sql->get_result()) {
                 echo 'hello';
             } else {
-                echo mysqli_error($link);
+                echo 'nono';
             }
             echo 'hello';
             if ($result->num_rows > 0) {
