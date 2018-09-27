@@ -1,7 +1,7 @@
 $(document).ready(function(){
   (function($) {
     var handler = Plaid.create({
-      selectAccount: true,
+      selectAccount: false,
       clientName: 'Plaid Quickstart',
       env: 'sandbox',
       key: 'e9c860997945f73948b878031b4e66',
@@ -19,6 +19,7 @@ $(document).ready(function(){
       $.post('save_token.php', {token: public_token, meta: metadata}, function(result) {
         $('#test').html(result);
       });
+      console.log(metadata);
 
       },
       onExit: function(err, metadata) {
