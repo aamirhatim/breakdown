@@ -7,7 +7,7 @@ $(document).ready(function(){
       key: 'e9c860997945f73948b878031b4e66',
       product: ['transactions', 'identity'],
       // Optional – use webhooks to get transaction and error updates
-      webhook: 'https://requestb.in',
+      webhook: 'http://www.budget.aamirhatim.com/php/webhooks.php',
       onLoad: function() {
       // Optional, called when Link loads
       },
