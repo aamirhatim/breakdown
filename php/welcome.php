@@ -25,8 +25,8 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
         <p><br>Click <a href = 'logout.php'>here</a> to log out.</p>
         <p id = 'test'></p>
 
-        <!-- <h2>Your Accounts</h2>
-        <div id = 'accounts'></div> -->
+        <h2>Your Accounts</h2>
+        <div id = 'accounts'></div>
 
         <button id="link-button">Link Account</button>
         
