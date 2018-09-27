@@ -63,6 +63,6 @@
             <input type = 'submit' value = 'Submit'>
         </form>
 
-        <p><br>Or log in <a href = 'login.php'>here</a></p>
+        <p><br>Or log in <a href = 'php/login.php'>here</a></p>
     </body>
 </html>
