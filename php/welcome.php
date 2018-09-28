@@ -55,7 +55,14 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
             $result->bind_result($token, $bank_account_id);
             while ($result->fetch()) {
                 $transactions = call_plaid_service($token, 'transactions', $bank_account_id);
-                print_r($transactions);
+                // print_r($transactions['transactions']);
+                foreach ($transactions['transactions'] as $t) {
+                    echo $t['amount'] . ' ';
+                    print_r($t['category']);
+                    echo ' ' . $t['date'] . ' ';
+                    echo $t['name'];
+                    echo '<br>';
+                }
                 echo '<br><br>';
             }
             ?>
