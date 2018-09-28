@@ -19,7 +19,7 @@ function call_plaid_service($token, $action, $bank_account_id) {
             "access_token"=>$token,
             "start_date"=> '2018-01-01',
             "end_date"=> '2018-06-01',
-            "options"=> ['account_ids'=>[$bank_account_id]]
+            "options"=> ['account_ids'=>[$bank_account_id], "offset"=>'30']
         );
         $url = '/transactions/get';
     } else {
