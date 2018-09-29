@@ -69,9 +69,8 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                     // $trans_id = $t['transaction_id'];
 
                     // Add transaction to database
-                    echo 'TEST';
                     if($sql = $link->prepare("INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-                        $sql->bind_param('issssssssss', $account_id, $bank_account_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
+                        $sql->bind_param('issssssssss', $account_id, $bank_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
                         
                         $categories = '';
                         for ($i = 0; $i < count($t['category']) - 1; $i++) {
@@ -100,34 +99,31 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                                 $trans_info[$key] = '';
                             }
                         }
-
                         echo '<br>';
+
+                        foreach ($trans_info as $key => $value) {
+                            if (is_null($value) && empty($value)) {
+                                echo 'NULL! ';
+                            }
+                        }
+                        
+                        $account_id = (int) $trans_info['account_id'];
+                        $bank_id = (string) $trans_info['bank_id'];
+                        $trans_id = (string) $trans_info['trans_id'];
+                        $trans_amount = (string) $trans_info['trans_amount'];
+                        $trans_name = (string) $trans_info['trans_name'];
+                        $trans_date = (string) $trans_info['trans_date'];
+                        $trans_categories = (string) $trans_info['trans_categories'];
+                        $trans_address = (string) $trans_info['trans_address'];
+                        $trans_city = (string) $trans_info['trans_city'];
+                        $trans_state = (string) $trans_info['tran_state'];
+                        $trans_zip = (string) $trans_info['trans_zip'];
+
                         print_r($trans_info);
                         echo '<br>';
-                        
-                        $account_id = $trans_info['account_id'];
-                        $trans_id = $trans_info['trans_id'];
-                        $trans_amount = $trans_info['trans_amount'];
-                        $trans_name = $trans_info['trans_name'];
-                        $trans_date = $trans_info['trans_date'];
-                        $trans_categories = $trans_info['trans_categories'];
-                        $trans_address = $trans_info['trans_address'];
-                        $trans_city = $trans_info['trans_city'];
-                        $trans_state = $trans_info['tran_state'];
-                        $trans_zip = $trans_info['trans_zip'];
 
                         $sql->execute();
-                        // echo 'hi3';
-                        // $query = "INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (" . $account_id .",". $bank_account_id .",". $trans_id .",". $trans_amount .",". $trans_name .",". $trans_date .",". $trans_categories .",". $trans_address .",". $trans_city .",". $trans_state .",". $trans_zip . ")";
-                        // echo '<br>' . $query . '<br>';
                     }
-                    
-
-                    echo $t['amount'] . ' ';
-                    print_r($t['category']);
-                    echo ' ' . $t['date'] . ' ';
-                    echo $t['name'];
-                    echo '<br>';
                 }
                 echo '<br><br>';
             }
