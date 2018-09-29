@@ -82,6 +82,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                         // Create info array
                         $trans_info = [
                             $_SESSION['id'] => $account_id,
+                            $bank_account_id => $trans_bank_id,
                             $t['transaction_id'] => $trans_id,
                             $t['amount'] => $trans_amount,
                             $t['name'] => $trans_name,
@@ -95,7 +96,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
 
                         foreach ($trans_info as $item) {
                             if (is_null($item) && empty($item)) {
-                                echo 'EMPTY!';
+                                $item = '';
                             }
                         }
 
