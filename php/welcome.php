@@ -89,7 +89,6 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                         $trans_zip = $trans_loc['zip'];
 
                         $sql->execute();
-                        echo $sql->error_get_last();
                     }
                     
 
