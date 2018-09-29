@@ -66,8 +66,9 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                         $transaction_id = $t['transaction_id'];
                         if ($sql->execute()) {
                             $sql->bind_result($result);
-                            $sql->fetch();
-                            echo $sql->num_rows . '<br>';
+                            while ($sql->fetch()) {
+                                echo $result;
+                            }
                         }
                     }
 
