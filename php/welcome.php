@@ -60,7 +60,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                 foreach ($transactions['transactions'] as $t) {
                     // Save transaction details
                     // $trans_amount = $t['amount'];
-                    $trans_categories = $t['category'];
+                    // $trans_categories = $t['category'];
                     // $trans_date = $t['date'];
                     $trans_loc = $t['location'];
                     // $trans_name = $t['name'];
@@ -68,13 +68,14 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                     // $trans_id = $t['transaction_id'];
 
                     // Add transaction to database
-                    $sql = $link->prepare("INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    $sql->bind_param('ississsssss', $account_id, $bank_account_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
+                    // $sql = $link->prepare("INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    // $sql->bind_param('ississsssss', $account_id, $bank_account_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
                     $account_id = $_SESSION['id'];
                     $trans_id = $t['transaction_id'];
                     $trans_amount = $t['amount'];
                     $trans_name = $t['name'];
                     $trans_date = $t['date'];
+                    echo $t['category'];
                     $trans_categories = '';
                     for ($i = 0; $i < count($t['category']) - 1; $i++) {
                         $trans_categories += $t['category'][$i] . ',';
