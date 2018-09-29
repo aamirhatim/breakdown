@@ -69,27 +69,26 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
 
                     // Add transaction to database
                     if($sql = $link->prepare("INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-                        if ($sql->bind_param('ississsssss', $account_id, $bank_account_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip)) {
-                            $account_id = $_SESSION['id'];
-                            $trans_id = $t['transaction_id'];
-                            $trans_amount = (float) $t['amount'];
-                            $trans_name = $t['name'];
-                            $trans_date = $t['date'];
-                            $trans_categories = '';
-                            for ($i = 0; $i < count($t['category']) - 1; $i++) {
-                                $trans_categories .= $t['category'][$i] . ',';
-                            }
-                            $trans_categories .= $t['category'][count($t['category']) - 1];
-                            $trans_address = $trans_loc['address'];
-                            $trans_city = $trans_loc['city'];
-                            $trans_state = $trans_loc['state'];
-                            $trans_zip = $trans_loc['zip'];
-
-                            $sql->execute();
-                            $sql->close();
-                        } else {
-                            echo 'FAILED';
+                        echo 'YAY';
+                        $account_id = $_SESSION['id'];
+                        $trans_id = $t['transaction_id'];
+                        $trans_amount = (float) $t['amount'];
+                        $trans_name = $t['name'];
+                        $trans_date = $t['date'];
+                        $trans_categories = '';
+                        echo $trans_address = $trans_loc['address'];
+                        for ($i = 0; $i < count($t['category']) - 1; $i++) {
+                            $trans_categories .= $t['category'][$i] . ',';
                         }
+                        $trans_categories .= $t['category'][count($t['category']) - 1];
+                        $trans_address = $trans_loc['address'];
+                        $trans_city = $trans_loc['city'];
+                        $trans_state = $trans_loc['state'];
+                        $trans_zip = $trans_loc['zip'];
+
+                        $sql->bind_param('ississsssss', $account_id, $bank_account_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
+                        $sql->execute();
+                        $sql->close();
                     }
                     
 
