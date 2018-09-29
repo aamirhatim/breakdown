@@ -111,11 +111,13 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                         foreach ($trans_info as $item) {
                             if (is_null($item) && empty($item)) {
                                 echo 'EMPTY! ';
-                                $item = '';
+                                $item = ' ';
                             }
                         }
 
+                        echo '<br>';
                         print_r($trans_info);
+                        echo '<br>';
 
                         foreach ($trans_info as $item) {
                             if (is_null($item) && empty($item)) {
