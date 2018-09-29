@@ -67,7 +67,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                         if ($sql->execute()) {
                             $sql->bind_result($result);
                             while ($sql->fetch()) {
-                                echo $result;
+                                echo $result->num_rows;
                             }
                         }
                     }
