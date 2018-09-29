@@ -80,23 +80,9 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                         $categories .= $t['category'][count($t['category']) - 1];
 
                         // Create info array
-                        // $trans_info = [
-                        //     $_SESSION['id'] => $account_id,
-                        //     $bank_account_id => $trans_bank_id,
-                        //     $t['transaction_id'] => $trans_id,
-                        //     $t['amount'] => $trans_amount,
-                        //     $t['name'] => $trans_name,
-                        //     $t['date'] => $trans_date,
-                        //     $categories => $trans_categories,
-                        //     $trans_loc['address'] => $trans_address,
-                        //     $trans_loc['city'] => $trans_city,
-                        //     $trans_loc['state'] => $trans_state,
-                        //     $trans_loc['zip'] => $trans_zip
-                        // ];
-
                         $trans_info = [
                             'account_id' => $_SESSION['id'],
-                            'trans_bank_id' => $bank_account_id,
+                            'bank_id' => $bank_account_id,
                             'trans_id' => $t['transaction_id'],
                             'trans_amount' => $t['amount'],
                             'trans_name' => $t['name'],
@@ -118,39 +104,19 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                         echo '<br>';
                         print_r($trans_info);
                         echo '<br>';
-
-                        foreach ($trans_info as $key => $value) {
-                            if (is_null($value) && empty($value)) {
-                                echo 'EMPTY! ';
-                            }
-                        }
                         
-                        
-                        // $account_id = $_SESSION['id'];
-                        // $trans_id = $t['transaction_id'];
-                        // $trans_amount = $t['amount'];
-                        // $trans_name = $t['name'];
-                        // $trans_date = $t['date'];
-                        // $trans_categories = '';
-                        // echo $trans_address = $trans_loc['address'];
-                        // for ($i = 0; $i < count($t['category']) - 1; $i++) {
-                        //     $trans_categories .= $t['category'][$i] . ',';
-                        // }
-                        // $trans_categories .= $t['category'][count($t['category']) - 1];
-                        // $trans_address = $trans_loc['address'];
-                        // $trans_city = $trans_loc['city'];
-                        // $trans_state = $trans_loc['state'];
-                        // $trans_zip = $trans_loc['zip'];
+                        $account_id = $trans_info['account_id'];
+                        $trans_id = $trans_info['trans_id'];
+                        $trans_amount = $trans_info['trans_amount'];
+                        $trans_name = $trans_info['trans_name'];
+                        $trans_date = $trans_info['trans_date'];
+                        $trans_categories = $trans_info['trans_categories'];
+                        $trans_address = $trans_info['trans_address'];
+                        $trans_city = $trans_info['trans_city'];
+                        $trans_state = $trans_info['tran_state'];
+                        $trans_zip = $trans_info['trans_zip'];
 
-                        // if (is_null($trans_city)) {
-                        //     echo 'NULL';
-                        // }
-
-                        // if (empty($trans_city)) {
-                        //     echo 'EMPTY';
-                        // }
-
-                        // $sql->execute();
+                        $sql->execute();
                         // echo 'hi3';
                         // $query = "INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (" . $account_id .",". $bank_account_id .",". $trans_id .",". $trans_amount .",". $trans_name .",". $trans_date .",". $trans_categories .",". $trans_address .",". $trans_city .",". $trans_state .",". $trans_zip . ")";
                         // echo '<br>' . $query . '<br>';
