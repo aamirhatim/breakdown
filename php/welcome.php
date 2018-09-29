@@ -108,10 +108,9 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                             'trans_zip' => $trans_loc['zip']
                         ];
 
-                        foreach ($trans_info as $item) {
-                            if (is_null($item) && empty($item)) {
+                        foreach ($trans_info as $key => $value) {
+                            if (is_null($value) && empty($value)) {
                                 echo 'EMPTY! ';
-                                $trans_info[$item] = 'hi';
                             }
                         }
 
@@ -119,11 +118,11 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                         print_r($trans_info);
                         echo '<br>';
 
-                        foreach ($trans_info as $item) {
-                            if (is_null($item) && empty($item)) {
-                                echo 'EMPTY! ';
-                            }
-                        }
+                        // foreach ($trans_info as $item) {
+                        //     if (is_null($item) && empty($item)) {
+                        //         echo 'EMPTY! ';
+                        //     }
+                        // }
                         
                         
                         // $account_id = $_SESSION['id'];
