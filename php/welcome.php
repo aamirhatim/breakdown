@@ -78,10 +78,9 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                     echo $t['category'] . ' ' .count($t['category']) . '<br>';
                     $trans_categories = '';
                     for ($i = 0; $i < count($t['category']) - 1; $i++) {
-                        echo $t['category'][$i] . ' ' . '<br>';
-                        // $trans_categories += $t['category'][$i] . ',';
+                        $trans_categories .= $t['category'][$i] . ',';
                     }
-                    $trans_categories += $t['category'][count($t['category']) - 1];
+                    $trans_categories .= $t['category'][count($t['category']) - 1];
                     echo $trans_categories . '<br>';
 
                     $trans_categories = $t['category'];
