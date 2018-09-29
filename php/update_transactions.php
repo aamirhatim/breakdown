@@ -32,7 +32,7 @@ while ($result->fetch()) {
         }
 
         // Add transaction to database if new
-        if ($sql->num_rows) {
+        if ($sql->num_rows == 0) {
             if($sql = $link->prepare("INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
                 $sql->bind_param('issdsssssss', $account_id, $bank_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
                 
