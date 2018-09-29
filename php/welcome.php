@@ -56,17 +56,23 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
             $result->bind_result($token, $bank_account_id);
             while ($result->fetch()) {
                 $transactions = call_plaid_service($token, 'transactions', $bank_account_id);
-                // print_r($transactions['transactions']);
-
                 foreach ($transactions['transactions'] as $t) {
-                    // Save transaction details
-                    // $trans_amount = $t['amount'];
-                    // $trans_categories = $t['category'];
-                    // $trans_date = $t['date'];
                     $trans_loc = $t['location'];
-                    // $trans_name = $t['name'];
                     $trans_pending = $t['pending'];
-                    // $trans_id = $t['transaction_id'];
+
+                    // Check if transaction already exists
+                    if ($sql = $link->prepare("SELECT transaction_id FROM transactions WHERE transaction_id = ?")) {
+                        $sql->bind_param('s', $transaction_id);
+                        $transaction_id = htmlspecialchars($t['transaction_id']);
+                        if ($sql->execute()) {
+                            $sql->bind_result($result);
+                            $count = 0;
+                            while ($result->fetch()) {
+                                $count ++;
+                            }
+                            echo $count . '<br>';
+                        }
+                    }
 
                     // Add transaction to database
                     if($sql = $link->prepare("INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
