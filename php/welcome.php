@@ -63,9 +63,10 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                     // Check if transaction already exists
                     if ($sql = $link->prepare("SELECT transaction_id FROM transactions WHERE transaction_id = ?")) {
                         $sql->bind_param('s', $transaction_id);
-                        $transaction_id = htmlspecialchars($t['transaction_id']);
+                        $transaction_id = $t['transaction_id'];
                         if ($sql->execute()) {
                             $sql->bind_result($result);
+                            $sql->fetch();
                             echo $sql->num_rows . '<br>';
                         }
                     }
