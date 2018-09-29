@@ -50,6 +50,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
         <h2>Transactions</h2>
         <div id = 'transactions'>
             <?php
+            include('db_config.php');
             include('plaid_service.php');
             $result = get_tokens();
             $result->bind_result($token, $bank_account_id);
