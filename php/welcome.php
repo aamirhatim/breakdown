@@ -71,10 +71,10 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                     // Add transaction to database
                     echo 'TEST';
                     if($sql = $link->prepare("INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-                        $sql->bind_param('issdsssssss', $account_id, $bank_account_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
+                        $sql->bind_param('issssssssss', $account_id, $bank_account_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
                         $account_id = $_SESSION['id'];
                         $trans_id = $t['transaction_id'];
-                        $trans_amount = (float) $t['amount'];
+                        $trans_amount = $t['amount'];
                         $trans_name = $t['name'];
                         $trans_date = $t['date'];
                         $trans_categories = '';
@@ -89,7 +89,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                         $trans_zip = $trans_loc['zip'];
 
                         $sql->execute();
-                        $sql->close();
+                        echo $sql->error_get_last();
                     }
                     
 
@@ -101,6 +101,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                 }
                 echo '<br><br>';
             }
+            $sql->close();
             ?>
         </div>
 
