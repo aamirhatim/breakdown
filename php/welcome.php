@@ -68,6 +68,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                     // $trans_id = $t['transaction_id'];
 
                     // Add transaction to database
+                    echo 'TEST';
                     if($sql = $link->prepare("INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
                         echo 'YAY';
                         $account_id = $_SESSION['id'];
