@@ -90,10 +90,18 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                         $trans_state = $trans_loc['state'];
                         $trans_zip = $trans_loc['zip'];
 
+                        if (is_null($trans_city)) {
+                            echo 'NULL';
+                        }
+
+                        if (empty($trans_city)) {
+                            echo 'EMPTY';
+                        }
+
                         $sql->execute();
                         echo 'hi3';
-                        $query = "INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (" . $account_id .",". $bank_account_id .",". $trans_id .",". $trans_amount .",". $trans_name .",". $trans_date .",". $trans_categories .",". $trans_address .",". $trans_city .",". $trans_state .",". $trans_zip . ")";
-                        echo '<br>' . $query . '<br>';
+                        // $query = "INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (" . $account_id .",". $bank_account_id .",". $trans_id .",". $trans_amount .",". $trans_name .",". $trans_date .",". $trans_categories .",". $trans_address .",". $trans_city .",". $trans_state .",". $trans_zip . ")";
+                        // echo '<br>' . $query . '<br>';
                     }
                     
 
