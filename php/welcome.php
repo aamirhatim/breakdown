@@ -80,23 +80,37 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                         $categories .= $t['category'][count($t['category']) - 1];
 
                         // Create info array
+                        // $trans_info = [
+                        //     $_SESSION['id'] => $account_id,
+                        //     $bank_account_id => $trans_bank_id,
+                        //     $t['transaction_id'] => $trans_id,
+                        //     $t['amount'] => $trans_amount,
+                        //     $t['name'] => $trans_name,
+                        //     $t['date'] => $trans_date,
+                        //     $categories => $trans_categories,
+                        //     $trans_loc['address'] => $trans_address,
+                        //     $trans_loc['city'] => $trans_city,
+                        //     $trans_loc['state'] => $trans_state,
+                        //     $trans_loc['zip'] => $trans_zip
+                        // ];
+
                         $trans_info = [
-                            $_SESSION['id'] => $account_id,
-                            $bank_account_id => $trans_bank_id,
-                            $t['transaction_id'] => $trans_id,
-                            $t['amount'] => $trans_amount,
-                            $t['name'] => $trans_name,
-                            $t['date'] => $trans_date,
-                            $categories => $trans_categories,
-                            $trans_loc['address'] => $trans_address,
-                            $trans_loc['city'] => $trans_city,
-                            $trans_loc['state'] => $trans_state,
-                            $trans_loc['zip'] => $trans_zip
+                            'account_id' => $_SESSION['id'],
+                            'trans_bank_id' => $bank_account_id,
+                            'trans_id' => $t['transaction_id'],
+                            'trans_amount' => $t['amount'],
+                            'trans_name' => $t['name'],
+                            'trans_date' => $t['date'],
+                            'trans_categories' => $categories,
+                            'trans_address' => $trans_loc['address'],
+                            'trans_city' => $trans_loc['city'],
+                            'trans_state' => $trans_loc['state'],
+                            'trans_zip' => $trans_loc['zip']
                         ];
 
                         foreach ($trans_info as $item) {
                             if (is_null($item) && empty($item)) {
-                                $item = '';
+                                echo 'EMPTY! ';
                             }
                         }
 
