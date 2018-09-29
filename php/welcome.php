@@ -93,6 +93,12 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                             $trans_loc['zip'] => $trans_zip
                         ];
 
+                        foreach ($trans_info as $item) {
+                            if (is_null($item) && empty($item)) {
+                                echo 'EMPTY!';
+                            }
+                        }
+
                         print_r($trans_info);
                         
                         
