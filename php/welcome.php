@@ -110,11 +110,18 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
 
                         foreach ($trans_info as $item) {
                             if (is_null($item) && empty($item)) {
-                                echo '';
+                                echo 'EMPTY! ';
+                                $item = '';
                             }
                         }
 
                         print_r($trans_info);
+
+                        foreach ($trans_info as $item) {
+                            if (is_null($item) && empty($item)) {
+                                echo 'EMPTY! ';
+                            }
+                        }
                         
                         
                         // $account_id = $_SESSION['id'];
