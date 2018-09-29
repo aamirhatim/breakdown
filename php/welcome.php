@@ -70,7 +70,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
 
                     // Add transaction to database
                     if($sql = $link->prepare("INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-                        $sql->bind_param('issssssssss', $account_id, $bank_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
+                        $sql->bind_param('issdsssssss', $account_id, $bank_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
                         
                         $categories = '';
                         for ($i = 0; $i < count($t['category']) - 1; $i++) {
@@ -93,24 +93,17 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
                             'trans_zip' => $trans_loc['zip']
                         ];
 
+                        // Fill any null values with empty string
                         foreach ($trans_info as $key => $value) {
                             if (is_null($value) && empty($value)) {
-                                echo 'EMPTY! ';
                                 $trans_info[$key] = '';
-                            }
-                        }
-                        echo '<br>';
-
-                        foreach ($trans_info as $key => $value) {
-                            if (is_null($value) && empty($value)) {
-                                echo 'NULL! ';
                             }
                         }
                         
                         $account_id = (int) $trans_info['account_id'];
                         $bank_id = (string) $trans_info['bank_id'];
                         $trans_id = (string) $trans_info['trans_id'];
-                        $trans_amount = (string) $trans_info['trans_amount'];
+                        $trans_amount = (double) $trans_info['trans_amount'];
                         $trans_name = (string) $trans_info['trans_name'];
                         $trans_date = (string) $trans_info['trans_date'];
                         $trans_categories = (string) $trans_info['trans_categories'];
