@@ -32,7 +32,6 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
           <th>Name</th>
           <th>Institution</th>
         </tr>
-
         <?php
         include(__DIR__.'/server/db_service.php');
         $result = get_all_accounts();
@@ -49,10 +48,34 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
 
     <h2>Transactions</h2>
     <div id = 'transactions'>
-      <?php
-      // Update transactions from Plaid and save to database
-      include(__DIR__.'/server/update_transactions.php');
-      ?>
+      <table>
+        <tr>
+          <th>Account Name</th>
+          <th>Amount</th>
+          <th>Transaction</th>
+          <th>Date</th>
+          <th>Categories</th>
+        </tr>
+        <?php
+        require_once(__DIR__.'/server/db_service.php');
+        $result = get_transactions();
+        $result->bind_result($bank_id, $amount, $transaction_name, $date, $categories);
+        $result->store_result();
+        while ($result->fetch()) {
+          // Get the bank account name
+          $bank_name = get_bank_name($bank_id);
+
+          // Fill out table
+          echo '<tr>';
+          echo '<td>' . $bank_name . '</td>';
+          echo '<td>' . $amount . '</td>';
+          echo '<td>' . $transaction_name . '</td>';
+          echo '<td>' . $date . '</td>';
+          echo '<td>' . $categories . '</td>';
+          echo '</tr>';
+        }
+        ?>
+      </table>
     </div>
 
     <button id="link-button">Link Account</button>
