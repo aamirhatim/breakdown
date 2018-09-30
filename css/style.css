@@ -45,7 +45,7 @@ html, body
   width: 150px;
 }
 
-#login-form input[type = text]
+#login-form input[type = text],input[type = password]
 {
   box-sizing: border-box;
   margin: 5px;
