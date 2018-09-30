@@ -18,9 +18,9 @@ require(__DIR__.'/../server/register_script.php');
         <div id = 'login-img'>filler image/icon</div>
         <div id = 'login-text'>Sign Up</div>
 
-        <input type = 'text' name = 'email' placeholder = 'email'>
-        <input type = 'text' name = 'user' placeholder = 'username'>
-        <input type = 'password' name = 'pwd' placeholder = 'password'>
+        <input type = 'text' name = 'email' placeholder = 'email' required>
+        <input type = 'text' name = 'user' placeholder = 'username' required>
+        <input type = 'password' name = 'pwd' placeholder = 'password' required>
         <input type = 'submit' value = 'Submit'>
 
         <div>

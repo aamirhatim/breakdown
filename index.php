@@ -18,8 +18,8 @@ require(__DIR__.'/php/server/login_script.php');
         <div id = 'login-img'>filler image/icon</div>
         <div id = 'login-text'>Log In</div>
 
-        <input type = 'text' name = 'user' placeholder = 'username'>
-        <input type = 'password' name = 'pwd' placeholder = 'password'>
+        <input type = 'text' name = 'user' placeholder = 'username' required>
+        <input type = 'password' name = 'pwd' placeholder = 'password' required>
         <input type = 'submit' value = 'Submit'>
 
         <div>
