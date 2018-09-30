@@ -56,6 +56,16 @@ $link->close();
     </head>
 
     <body>
+        <div id = 'login-container'>
+            
+        </div>
+
+
+
+
+
+
+
         <form action = '<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>' method = 'POST'>
             <input type = 'text' name = 'email'>
             <input type = 'text' name = 'user'>

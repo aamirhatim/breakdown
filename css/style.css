@@ -1,0 +1,14 @@
+@charset 'UTF-8';
+
+/* Enable/disable borders around all elements for debugging */
+/* *
+{
+    border: 1px solid black;
+} */
+
+#login-container
+{
+    height: 100px;
+    width: 100px;
+    background-color: red;
+}
