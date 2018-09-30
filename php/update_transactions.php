@@ -11,7 +11,6 @@ $result->store_result();
 
 // Exit if no tokens found
 if ($result->num_rows == 0) {
-    echo $result->num_rows . '<br>';
     return;
 }
 
