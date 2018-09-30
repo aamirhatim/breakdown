@@ -19,7 +19,7 @@ require(__DIR__.'/php/server/login_script.php');
         <div id = 'login-text'>Log In</div>
 
         <input type = 'text' name = 'user' placeholder = 'username'>
-        <input type = 'text' name = 'pwd' placeholder = 'password'>
+        <input type = 'password' name = 'pwd' placeholder = 'password'>
         <input type = 'submit' value = 'Submit'>
 
         <div>

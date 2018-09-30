@@ -20,7 +20,7 @@ require(__DIR__.'/../server/register_script.php');
 
         <input type = 'text' name = 'email' placeholder = 'email'>
         <input type = 'text' name = 'user' placeholder = 'username'>
-        <input type = 'text' name = 'pwd' placeholder = 'password'>
+        <input type = 'password' name = 'pwd' placeholder = 'password'>
         <input type = 'submit' value = 'Submit'>
 
         <div>
