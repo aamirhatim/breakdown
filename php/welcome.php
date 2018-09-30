@@ -9,6 +9,12 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
   die();
 }
 
+// Include db service library
+require_once(__DIR__.'/server/db_service.php');
+
+// Get any new transactions
+include(__DIR__.'/server/update_transactions.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +39,6 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
           <th>Institution</th>
         </tr>
         <?php
-        include(__DIR__.'/server/db_service.php');
         $result = get_all_accounts();
         $result->bind_result($account_name, $institution);
         while ($result->fetch()) {
@@ -57,7 +62,6 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
           <th>Categories</th>
         </tr>
         <?php
-        require_once(__DIR__.'/server/db_service.php');
         $result = get_transactions();
         $result->bind_result($bank_id, $amount, $transaction_name, $date, $categories);
         $result->store_result();

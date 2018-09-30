@@ -38,6 +38,8 @@ function call_plaid_service($token, $action, $bank_account_id) {
         $url = '/identity/get';
     } else if ($action == 'income') {
         $url = '/income/get';
+    } else if ($action == 'remove') {
+      $url = 'item/remove';
     }
 
     //initialize session
@@ -48,19 +50,19 @@ function call_plaid_service($token, $action, $bank_account_id) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_fields);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
-        'Content-Type: application/json',                                                                                
-        'Content-Length: ' . strlen($data_fields))                                                                       
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($data_fields))
     );
 
     //execute session
     $service_json = curl_exec($ch);
-    $service = json_decode($service_json,true);  
+    $service = json_decode($service_json,true);
 
     //check for errors
     if(isset($service['error_code'])){
         error_log("Plaid Error Message: " . $service_json);
-    }           
+    }
 
     //close session
     curl_close($ch);

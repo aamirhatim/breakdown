@@ -1,8 +1,9 @@
 <?php
 
 // Connect to DB and include Plaid service to get transactions
-include(__DIR__.'/db_config.php');
-include(__DIR__.'/plaid_service.php');
+require(__DIR__.'/db_config.php');
+require_once(__DIR__.'/db_service.php');
+require_once(__DIR__.'/plaid_service.php');
 
 // Get tokens for each bank account the user has registered
 $result = get_tokens();

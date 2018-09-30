@@ -2,7 +2,7 @@
 
 function get_all_accounts() {
   include(__DIR__.'/db_config.php');
-  if ($sql = $link->prepare('SELECT account_name, institution FROM tokens WHERE account_id = ?')) {
+  if ($sql = $link->prepare('SELECT account_name, institution FROM tokens WHERE account_id = ? ORDER BY account_name')) {
     $sql->bind_param('i', $account_id);
     $account_id = $_SESSION['id'];
     if ($sql->execute()) {
@@ -26,7 +26,7 @@ function get_tokens() {
 
 function get_transactions() {
   include(__DIR__.'/db_config.php');
-  if ($sql = $link->prepare('SELECT bank_account_id, amount, transaction_name, date, categories FROM transactions WHERE account_id = ?')) {
+  if ($sql = $link->prepare('SELECT bank_account_id, amount, transaction_name, date, categories FROM transactions WHERE account_id = ? ORDER BY date DESC')) {
     $sql->bind_param('i', $account_id);
     $account_id = $_SESSION['id'];
     if ($sql->execute()) {
