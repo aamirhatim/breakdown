@@ -1,8 +1,8 @@
 <?php
 
 // Connect to DB and include Plaid service to get transactions
-include('db_config.php');
-include('plaid_service.php');
+include(__DIR__.'/db_config.php');
+include(__DIR__.'/plaid_service.php');
 
 // Get tokens for each bank account the user has registered
 $result = get_tokens();
@@ -41,7 +41,7 @@ while ($result->fetch()) {
         if ($sql->num_rows == 0) {
             if($sql = $link->prepare("INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
                 $sql->bind_param('issdsssssss', $account_id, $bank_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
-                
+
                 $categories = '';
                 for ($i = 0; $i < count($t['category']) - 1; $i++) {
                     $categories .= $t['category'][$i] . ',';
@@ -69,7 +69,7 @@ while ($result->fetch()) {
                         $trans_info[$key] = '';
                     }
                 }
-                
+
                 $account_id = (int) $trans_info['account_id'];
                 $bank_id = (string) $trans_info['bank_id'];
                 $trans_id = (string) $trans_info['trans_id'];

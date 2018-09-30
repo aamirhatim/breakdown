@@ -1,13 +1,13 @@
 <?php
 
 // Load Plaid service function
-include('plaid_service.php');
+include(__DIR__.'/plaid_service.php');
 
 // Initialize session
 session_start();
 
 // Connect to database
-require_once('db_config.php');
+require_once(__DIR__.'/db_config.php');
 
 // Exchange public token for access_token
 $public_token = htmlspecialchars($_POST['token']);

@@ -1,14 +1,54 @@
 @charset 'UTF-8';
 
 /* Enable/disable borders around all elements for debugging */
-/* *
+ *
 {
-    border: 1px solid black;
-} */
+  border: 1px solid black;
+}
+
+html, body
+{
+  background-color: gray;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
 
 #login-container
 {
-    height: 100px;
-    width: 100px;
-    background-color: red;
+  align-items: center;
+  /*background-color: red;*/
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+#login-form
+{
+  align-items: center;
+  background-color: white;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  width: 400px;
+}
+
+#login-img
+{
+  box-sizing: border-box;
+  height: 150px;
+  margin: 25px;
+  width: 150px;
+}
+
+#login-form input[type = text]
+{
+  box-sizing: border-box;
+  margin: 5px;
+  padding: 10px;
+  width: 60%;
 }

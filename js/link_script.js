@@ -16,7 +16,7 @@ $(document).ready(function(){
       // The metadata object contains info about the institution the
       // user selected and the account ID or IDs, if the
       // Select Account view is enabled.
-      $.post('save_token.php', {token: public_token, meta: metadata}, function(result) {
+      $.post('../php/server/save_token.php', {token: public_token, meta: metadata}, function(result) {
         $('#test').html(result);
       });
       console.log(metadata);

@@ -10,7 +10,7 @@ $_SESSION = array();
 session_destroy();
 
 // Redirect to main page
-header('location: ../index.php');
+header('location: http://budget.aamirhatim.com/index.php');
 exit;
 
 ?>
