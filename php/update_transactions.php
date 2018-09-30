@@ -7,6 +7,12 @@ include('plaid_service.php');
 // Get tokens for each bank account the user has registered
 $result = get_tokens();
 $result->bind_result($token, $bank_account_id);
+$result->store_result();
+
+// Exit if no tokens found
+if ($result->num_rows == 0) {
+    exit;
+}
 
 // Reset count for new rows
 $row_count = 0;
