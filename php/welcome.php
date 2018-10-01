@@ -24,12 +24,12 @@ include(__DIR__.'/server/update_transactions.php');
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
     <script src = '../js/link_script.js'></script>
+    <script src = '../js/unlink_script.js'></script>
   </head>
 
   <body>
     <h1>YOU'RE LOGGED IN</h1>
     <p><br>Click <a href = 'server/logout_script.php'>here</a> to log out.</p>
-    <p id = 'test'></p>
 
     <h2>Your Accounts</h2>
     <div id = 'accounts'>
@@ -83,6 +83,8 @@ include(__DIR__.'/server/update_transactions.php');
     </div>
 
     <button id="link-button">Link Account</button>
+    <button id = 'unlink-button'>Unlink All Accounts</button>
+    <div id = 'test'></div>
 
   </body>
 </html>

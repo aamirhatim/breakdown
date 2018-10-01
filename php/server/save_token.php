@@ -17,7 +17,7 @@ $meta = $_POST['meta'];
 foreach ($meta['accounts'] as $requested_account) {
     // Check if account has already been added
     $account_exists = 0;
-    if($sql = $link->prepare("SELECT account_id FROM tokens WHERE account_id = ? AND account_mask = ? AND account_name = ?")) {
+    if($sql = $link->prepare("SELECT account_id FROM bank_accounts WHERE account_id = ? AND account_mask = ? AND account_name = ?")) {
         mysqli_stmt_bind_param($sql, 'iss', $account_id, $account_mask, $account_name);
         $account_id = $_SESSION['id'];
         $account_mask = $requested_account['mask'];
@@ -35,7 +35,7 @@ foreach ($meta['accounts'] as $requested_account) {
 
     // If account does not exist, add it to the database
     if (!$account_exists) {
-        if($sql = $link->prepare("INSERT INTO tokens (account_id, bank_account_id, account_mask, account_name, institution, access_token) VALUES (?, ?, ?, ?, ?, ?)")) {
+        if($sql = $link->prepare("INSERT INTO bank_accounts (account_id, bank_account_id, account_mask, account_name, institution, access_token) VALUES (?, ?, ?, ?, ?, ?)")) {
             mysqli_stmt_bind_param($sql, 'isssss', $account_id, $bank_account_id, $account_mask, $account_name, $institution, $access_token);
             $account_id = $_SESSION['id'];
             $bank_account_id = $requested_account['id'];
