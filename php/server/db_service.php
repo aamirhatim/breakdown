@@ -4,7 +4,7 @@ session_start();
 
 function get_all_accounts() {
   include(__DIR__.'/db_config.php');
-  if ($sql = $link->prepare('SELECT account_name, institution FROM bank_accounts WHERE account_id = ? ORDER BY account_name')) {
+  if ($sql = $link->prepare('SELECT account_name, institution, bank_account_id FROM bank_accounts WHERE account_id = ? ORDER BY account_name')) {
     $sql->bind_param('i', $account_id);
     $account_id = $_SESSION['id'];
     if ($sql->execute()) {

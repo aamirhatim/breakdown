@@ -92,6 +92,6 @@ while ($result->fetch()) {
 }
 $sql->close();
 
-echo '<h3>' . $row_count . ' new transactions added.';
+echo '<h3>' . $row_count . ' new transactions added.</h3>';
 
 ?>

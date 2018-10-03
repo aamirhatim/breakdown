@@ -15,6 +15,18 @@ html, body
   width: 100%;
 }
 
+body
+{
+  margin-top: 70px;
+}
+
+main
+{
+  display: flex;
+  margin: 0 auto;
+  width: 70%;
+}
+
 #login-container
 {
   align-items: center;
@@ -51,4 +63,48 @@ html, body
   margin: 5px;
   padding: 10px;
   width: 60%;
+}
+
+nav
+{
+  background-color: red;
+  height: 60px;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+}
+
+#nav-links
+{
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  float: right;
+  height: 100%;
+}
+
+.nav-item
+{
+  box-sizing: border-box;
+  margin: 5px;
+}
+
+.sidebar
+{
+  box-sizing: border-box;
+  height: 200px;
+  width: 20%;
+}
+
+.main-content
+{
+  flex-grow: 1;
+  /*height: 200px;*/
+  /*width: 60%;*/
+}
+
+.account-card
+{
+  box-sizing: border-box;
+  margin: 20px 5px;
 }

@@ -10,10 +10,10 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
 }
 
 // Include db service library
-require_once(__DIR__.'/server/db_service.php');
+require_once(__DIR__.'/../server/db_service.php');
 
 // Get any new transactions
-// include(__DIR__.'/server/update_transactions.php');
+include(__DIR__.'/../server/update_transactions.php');
 
 ?>
 
@@ -21,45 +21,20 @@ require_once(__DIR__.'/server/db_service.php');
 <html>
   <head>
     <base href = 'http://budget.aamirhatim.com/' />
-    <title>Welcome!</title>
+    <title>Transactions</title>
     <link rel = 'stylesheet' href = 'css/style.css'>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-    <script src = 'js/link_script.js'></script>
-    <script src = 'js/unlink_script.js'></script>
   </head>
 
   <nav>
-    <?php require(__DIR__.'/client/navbar.php'); ?>
+    <?php require(__DIR__.'/navbar.php'); ?>
   </nav>
 
   <body>
     <main>
       <div class = 'main-content'>
-        <h1>YOU'RE LOGGED IN</h1>
-
-        <h2>Your Accounts</h2>
-        <div id = 'accounts'>
-          <table>
-            <tr>
-              <th>Name</th>
-              <th>Institution</th>
-            </tr>
-            <?php
-            $result = get_all_accounts();
-            $result->bind_result($account_name, $institution, $bank_id);
-            while ($result->fetch()) {
-              echo '<tr>';
-              echo '<td>' . $account_name . '</td>';
-              echo '<td>' . $institution . '</td>';
-              echo '</tr>';
-            }
-            ?>
-          </table>
-        </div>
-
-        <h2>Transactions</h2>
+        <h1>Transactions</h1>
         <div id = 'transactions'>
           <table>
             <tr>
@@ -89,10 +64,6 @@ require_once(__DIR__.'/server/db_service.php');
             ?>
           </table>
         </div>
-
-        <button id="link-button">Link Account</button>
-        <button id = 'unlink-button'>Unlink All Accounts</button>
-        <div id = 'test'></div>
       </div>
     </main>
 
