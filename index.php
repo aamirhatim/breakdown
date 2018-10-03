@@ -8,6 +8,7 @@ require(__DIR__.'/php/server/login_script.php');
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <head>
+    <base href = 'http://budget.aamirhatim.com/' />
     <title>Log In</title>
     <link rel = 'stylesheet' href = 'css/style.css'>
   </head>
