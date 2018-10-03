@@ -3,12 +3,12 @@
 /* Enable/disable borders around all elements for debugging */
  *
 {
-  /*border: 1px solid black;*/
+  border: 1px solid black;
 }
 
 html, body
 {
-  background-color: gray;
+  background-color: white;
   height: 100%;
   margin: 0;
   padding: 0;

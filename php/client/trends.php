@@ -22,8 +22,8 @@ require_once(__DIR__.'/../server/db_service.php');
     <link rel = 'stylesheet' href = 'css/style.css'>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-    <script src = 'js/accounts_settings.js'></script>
+    <script src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js'></script>
+    <script src = 'js/chart_test.js'></script>
   </head>
 
   <body>
@@ -34,7 +34,14 @@ require_once(__DIR__.'/../server/db_service.php');
     <main>
       <div class = 'sidebar'></div>
 
-      <div class = 'main-content'></div>
+      <div class = 'main-content'>
+        <div id = 'test'></div>
+        <div id = 'chart-test' style= 'width:500px; height:500px'>
+          <canvas id="myChart">
+            <script>plot_chart()</script>
+          </canvas>
+        </div>
+      </div>
 
       <div class = 'sidebar'></div>
     </main>
