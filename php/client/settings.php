@@ -18,7 +18,7 @@ require_once(__DIR__.'/../server/db_service.php');
 <html>
   <head>
     <base href = 'http://budget.aamirhatim.com/' />
-    <title>Transactions</title>
+    <title>Settings</title>
     <link rel = 'stylesheet' href = 'css/style.css'>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
