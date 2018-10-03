@@ -25,9 +25,6 @@ require_once(__DIR__.'/server/db_service.php');
     <link rel = 'stylesheet' href = 'css/style.css'>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-    <script src = 'js/link_script.js'></script>
-    <script src = 'js/unlink_script.js'></script>
   </head>
 
   <nav>
@@ -90,8 +87,7 @@ require_once(__DIR__.'/server/db_service.php');
           </table>
         </div>
 
-        <button id="link-button">Link Account</button>
-        <button id = 'unlink-button'>Unlink All Accounts</button>
+
         <div id = 'test'></div>
       </div>
     </main>

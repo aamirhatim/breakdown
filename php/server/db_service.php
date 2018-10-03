@@ -54,26 +54,26 @@ function get_bank_name($bank_id) {
   $link->close();
 }
 
-function delete_account_transactions($bank_id) {
-  include(__DIR__.'/db_config.php');
-  if ($sql = $link->prepare('DELETE FROM transactions WHERE bank_account_id = ?')) {
-    $sql->bind_param('s', $bank_id);
-    if ($sql->execute()) {
-      return $sql;
-    }
-  }
-  $link->close();
-}
+// function delete_account_transactions($bank_id) {
+//   include(__DIR__.'/db_config.php');
+//   if ($sql = $link->prepare('DELETE FROM transactions WHERE bank_account_id = ?')) {
+//     $sql->bind_param('s', $bank_id);
+//     if ($sql->execute()) {
+//       return $sql;
+//     }
+//   }
+//   $link->close();
+// }
 
-function delete_bank_account($bank_id) {
-  include(__DIR__.'/db_config.php');
-  if ($sql = $link->prepare('DELETE FROM bank_accounts WHERE bank_account_id = ?')) {
-    $sql->bind_param('s', $bank_id);
-    if ($sql->execute()) {
-      return $sql;
-    }
-  }
-  $link->close();
-}
+// function delete_bank_account($bank_id) {
+//   include(__DIR__.'/db_config.php');
+//   if ($sql = $link->prepare('DELETE FROM bank_accounts WHERE bank_account_id = ?')) {
+//     $sql->bind_param('s', $bank_id);
+//     if ($sql->execute()) {
+//       return $sql;
+//     }
+//   }
+//   $link->close();
+// }
 
 ?>
