@@ -3,7 +3,7 @@
 /* Enable/disable borders around all elements for debugging */
  *
 {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
 }
 
 html, body
