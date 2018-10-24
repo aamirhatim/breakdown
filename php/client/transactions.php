@@ -13,7 +13,7 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
 require_once(__DIR__.'/../server/db_service.php');
 
 // Get any new transactions
-include(__DIR__.'/../server/update_transactions.php');
+// include(__DIR__.'/../server/update_transactions.php');
 
 ?>
 

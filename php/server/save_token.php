@@ -33,8 +33,8 @@ foreach ($meta['accounts'] as $requested_account) {
 
   // If account does not exist, add it to the database
   if (!$account_exists) {
-    if($sql = $link->prepare("INSERT INTO bank_accounts (account_id, bank_account_id, account_mask, account_name, institution, access_token) VALUES (?, ?, ?, ?, ?, ?)")) {
-      $sql->bind_param('isssss', $account_id, $bank_account_id, $account_mask, $account_name, $institution, $access_token);
+    if($sql = $link->prepare("INSERT INTO bank_accounts (account_id, bank_account_id, account_mask, account_name, institution, access_token, item_id) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
+      $sql->bind_param('issssss', $account_id, $bank_account_id, $account_mask, $account_name, $institution, $access_token, $item_id);
       $account_id = $_SESSION['id'];
       $bank_account_id = $requested_account['id'];
       $account_mask = $requested_account['mask'];
@@ -42,6 +42,7 @@ foreach ($meta['accounts'] as $requested_account) {
       $institution = $meta['institution']['name'];
       $exchange = call_plaid_service($public_token, 'exchange');
       $access_token = $exchange['access_token'];
+      $item_id = $exchange['item_id'];
       if($sql->execute()) {
         echo '<h3>New bank account added!</h3>';
       }

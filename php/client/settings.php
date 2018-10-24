@@ -56,6 +56,7 @@ require_once(__DIR__.'/../server/db_service.php');
 
           <button id = "link-button">Link Account</button>
           <button id = 'unlink-all-button'>Unlink All Accounts</button>
+          <!-- <button id = 'link-update-button'>Update Credentials</button> -->
         </div>
       </div>
 
