@@ -33,13 +33,6 @@ $(document).ready(function() {
      });
   });
 
-  // // Unlink all accounts button
-  // $('#unlink-all-button').click(function(){
-  //   $.post('../php/server/unlink_accounts.php', {remove_type: '2'}, function(result) {
-  //     $('#test').html(result);
-  //   });
-  // });
-
   // Link account button
   $('#link-button').on('click', function() {
       handler.open();
