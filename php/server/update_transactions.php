@@ -7,188 +7,126 @@ require_once(__DIR__.'/plaid_service.php');
 
 // Function to update transactions for a single bank account. Initiated from webhook
 function update_transactions($item_id, $start_date) {
-  require(__DIR__.'/db_config.php');
-  // Get bank account id from item_id
-  if($sql = $link->prepare("SELECT account_id, bank_account_id, access_token FROM bank_accounts WHERE item_id = ?")) {
-    $sql->bind_param('s', $item_id);
-    if($sql->execute()) {
-      $sql->bind_result($account_id, $bank_account_id, $token);
-      $sql->store_result();
-      $sql->fetch();
+    require(__DIR__.'/db_config.php');
+    // Get access token of item
+    $token = get_access_token($item_id);
+
+    // Get list of bank accounts associated with item_id
+    if($sql = $link->prepare("SELECT account_id, bank_account_id FROM bank_accounts WHERE item_id = ?")) {
+        $sql->bind_param('s', $item_id);
+        if($sql->execute()) {
+            $sql->bind_result($account_id, $bank_account_id);
+            $sql->store_result();
+        }
     }
-  }
 
-  // Update transactions if a single row was returned
-  if($sql->num_rows == 1) {
-    $transactions = call_plaid_service($token, 'transactions', $bank_account_id, (string) $start_date);
-    // add_transactions($transactions);
-  }
+    // Get list of accounts if there are any
+    if($sql->num_rows > 0) {
+        $trans_accounts = [];
+        while($sql->fetch()) {
+            array_push($trans_accounts, $bank_account_id);
+        }
 
-  $trans = print_r($transactions, true);
-  mail("aamir300@gmail.com", "Webhook", "TRANSACTIONS ADDED" . $trans);
+        // Get all transactions for all listed bank accounts
+        $transactions_raw = call_plaid_service($token, 'transactions', $trans_accounts, (string) $start_date);
+        $total_transactions = $transactions_raw['total_transactions'];
+        $transactions = $transactions_raw['transactions'];
 
-  $sql->close();
+        // Check if number of returned transactions is less than the number of total transactions to be recieved
+        $trans_diff = $total_transactions - count($transactions);
+        while($trans_diff > 0) {
+            $transactions_raw = [];
+            // Get remaining transactions
+            $transactions_raw = call_plaid_service($token, 'transactions', $trans_accounts, (string) $start_date, $total_transactions - $trans_diff);
+
+            // Add new transactions to existing list
+            foreach($transactions_raw['transactions'] as $t) {
+                array_push($transactions, $t);
+            }
+
+            // Update trans_diff
+            $trans_diff -= count($transactions_raw['transactions']);
+        }
+    }
+
+    // Add list of transactions to database
+    add_transactions($transactions, $account_id);
+    $sql->close();
+
+    return (count($transactions));
 }
 
 // Adds any new transaction for a bank account to the transactions table in the database
 function add_transactions($transactions, $account_id) {
-  require(__DIR__.'/db_config.php');
-  // Extract useful info for each transaction
-  foreach ($transactions['transactions'] as $t) {
-      $trans_loc = $t['location'];
-      $trans_pending = $t['pending'];
+    require(__DIR__.'/db_config.php');
+    // Extract useful info for each transaction
+    foreach ($transactions as $t) {
+        $trans_loc = $t['location'];
+        $trans_pending = $t['pending'];
 
-      // Check if transaction already exists
-      if ($sql = $link->prepare("SELECT transaction_id FROM transactions WHERE transaction_id = ?")) {
-          $sql->bind_param('s', $transaction_id);
-          $transaction_id = $t['transaction_id'];
-          if ($sql->execute()) {
-              $sql->bind_result($result);
-              $sql->store_result();
-          }
-      }
+        // Check if transaction already exists
+        if ($sql = $link->prepare("SELECT transaction_id FROM transactions WHERE transaction_id = ?")) {
+            $sql->bind_param('s', $transaction_id);
+            $transaction_id = $t['transaction_id'];
+                if ($sql->execute()) {
+                    $sql->bind_result($result);
+                    $sql->store_result();
+                }
+        }
 
-      // Add transaction to database if new
-      if ($sql->num_rows == 0) {
-          if($sql = $link->prepare("INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-              $sql->bind_param('issdsssssss', $account_id, $bank_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
+        // Add transaction to database if new
+        if ($sql->num_rows == 0) {
+            if($sql = $link->prepare("INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+                $sql->bind_param('issdsssssss', $account_id, $bank_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
 
-              $categories = '';
-              for ($i = 0; $i < count($t['category']) - 1; $i++) {
-                  $categories .= $t['category'][$i] . ',';
-              }
-              $categories .= $t['category'][count($t['category']) - 1];
+                $categories = '';
+                for ($i = 0; $i < count($t['category']) - 1; $i++) {
+                    $categories .= $t['category'][$i] . ',';
+                }
+                $categories .= $t['category'][count($t['category']) - 1];
 
-              // Create info array
-              $trans_info = [
-                  'account_id' => $account_id,
-                  'bank_id' => $bank_account_id,
-                  'trans_id' => $t['transaction_id'],
-                  'trans_amount' => $t['amount'],
-                  'trans_name' => $t['name'],
-                  'trans_date' => $t['date'],
-                  'trans_categories' => $categories,
-                  'trans_address' => $trans_loc['address'],
-                  'trans_city' => $trans_loc['city'],
-                  'trans_state' => $trans_loc['state'],
-                  'trans_zip' => $trans_loc['zip']
-              ];
+                // Create info array
+                $trans_info = [
+                    'account_id' => $account_id,
+                    'bank_id' => $t['account_id'],
+                    'trans_id' => $t['transaction_id'],
+                    'trans_amount' => $t['amount'],
+                    'trans_name' => $t['name'],
+                    'trans_date' => $t['date'],
+                    'trans_categories' => $categories,
+                    'trans_address' => $trans_loc['address'],
+                    'trans_city' => $trans_loc['city'],
+                    'trans_state' => $trans_loc['state'],
+                    'trans_zip' => $trans_loc['zip']
+                ];
 
-              // Fill any null values with empty string
-              foreach ($trans_info as $key => $value) {
-                  if (is_null($value) && empty($value)) {
-                      $trans_info[$key] = '';
-                  }
-              }
+                // Fill any null values with empty string
+                foreach ($trans_info as $key => $value) {
+                    if (is_null($value) && empty($value)) {
+                        $trans_info[$key] = '';
+                    }
+                }
 
-              $account_id = (int) $trans_info['account_id'];
-              $bank_id = (string) $trans_info['bank_id'];
-              $trans_id = (string) $trans_info['trans_id'];
-              $trans_amount = (double) $trans_info['trans_amount'];
-              $trans_name = (string) $trans_info['trans_name'];
-              $trans_date = (string) $trans_info['trans_date'];
-              $trans_categories = (string) $trans_info['trans_categories'];
-              $trans_address = (string) $trans_info['trans_address'];
-              $trans_city = (string) $trans_info['trans_city'];
-              $trans_state = (string) $trans_info['tran_state'];
-              $trans_zip = (string) $trans_info['trans_zip'];
+                $account_id = (int) $trans_info['account_id'];
+                $bank_id = (string) $trans_info['bank_id'];
+                $trans_id = (string) $trans_info['trans_id'];
+                $trans_amount = (double) $trans_info['trans_amount'];
+                $trans_name = (string) $trans_info['trans_name'];
+                $trans_date = (string) $trans_info['trans_date'];
+                $trans_categories = (string) $trans_info['trans_categories'];
+                $trans_address = (string) $trans_info['trans_address'];
+                $trans_city = (string) $trans_info['trans_city'];
+                $trans_state = (string) $trans_info['tran_state'];
+                $trans_zip = (string) $trans_info['trans_zip'];
 
-              if ($sql->execute()) {
-                  $row_count ++;
-              }
-          }
-      }
-  }
-  $sql->close();
+                if ($sql->execute()) {
+                    $row_count ++;
+                }
+            }
+        }
+    }
+
+    $sql->close();
 }
-
-// // Get tokens for each bank account the user has registered
-// $result = get_tokens();
-// $result->bind_result($token, $bank_account_id);
-// $result->store_result();
-//
-// // Exit if no tokens found
-// if ($result->num_rows == 0) {
-//     return;
-// }
-//
-// // Reset count for new rows
-// $row_count = 0;
-//
-// // Get transaction info for each account
-// while ($result->fetch()) {
-//     // Get raw list of transactions
-//     $transactions = call_plaid_service($token, 'transactions', $bank_account_id);
-//
-//     // Extract useful info for each transaction
-//     foreach ($transactions['transactions'] as $t) {
-//         $trans_loc = $t['location'];
-//         $trans_pending = $t['pending'];
-//
-//         // Check if transaction already exists
-//         if ($sql = $link->prepare("SELECT transaction_id FROM transactions WHERE transaction_id = ?")) {
-//             $sql->bind_param('s', $transaction_id);
-//             $transaction_id = $t['transaction_id'];
-//             if ($sql->execute()) {
-//                 $sql->bind_result($result);
-//                 $sql->store_result();
-//             }
-//         }
-//
-//         // Add transaction to database if new
-//         if ($sql->num_rows == 0) {
-//             if($sql = $link->prepare("INSERT INTO transactions (account_id, bank_account_id, transaction_id, amount, transaction_name, date, categories, address, city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-//                 $sql->bind_param('issdsssssss', $account_id, $bank_id, $trans_id, $trans_amount, $trans_name, $trans_date, $trans_categories, $trans_address, $trans_city, $trans_state, $trans_zip);
-//
-//                 $categories = '';
-//                 for ($i = 0; $i < count($t['category']) - 1; $i++) {
-//                     $categories .= $t['category'][$i] . ',';
-//                 }
-//                 $categories .= $t['category'][count($t['category']) - 1];
-//
-//                 // Create info array
-//                 $trans_info = [
-//                     'account_id' => $_SESSION['id'],
-//                     'bank_id' => $bank_account_id,
-//                     'trans_id' => $t['transaction_id'],
-//                     'trans_amount' => $t['amount'],
-//                     'trans_name' => $t['name'],
-//                     'trans_date' => $t['date'],
-//                     'trans_categories' => $categories,
-//                     'trans_address' => $trans_loc['address'],
-//                     'trans_city' => $trans_loc['city'],
-//                     'trans_state' => $trans_loc['state'],
-//                     'trans_zip' => $trans_loc['zip']
-//                 ];
-//
-//                 // Fill any null values with empty string
-//                 foreach ($trans_info as $key => $value) {
-//                     if (is_null($value) && empty($value)) {
-//                         $trans_info[$key] = '';
-//                     }
-//                 }
-//
-//                 $account_id = (int) $trans_info['account_id'];
-//                 $bank_id = (string) $trans_info['bank_id'];
-//                 $trans_id = (string) $trans_info['trans_id'];
-//                 $trans_amount = (double) $trans_info['trans_amount'];
-//                 $trans_name = (string) $trans_info['trans_name'];
-//                 $trans_date = (string) $trans_info['trans_date'];
-//                 $trans_categories = (string) $trans_info['trans_categories'];
-//                 $trans_address = (string) $trans_info['trans_address'];
-//                 $trans_city = (string) $trans_info['trans_city'];
-//                 $trans_state = (string) $trans_info['tran_state'];
-//                 $trans_zip = (string) $trans_info['trans_zip'];
-//
-//                 if ($sql->execute()) {
-//                     $row_count ++;
-//                 }
-//             }
-//         }
-//     }
-// }
-// $sql->close();
-
-// echo '<h3>' . $row_count . ' new transactions added.</h3>';
 
 ?>

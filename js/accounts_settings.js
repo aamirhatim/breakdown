@@ -6,6 +6,33 @@ $(document).ready(function() {
     });
   });
 
+  // Account toggle button
+  $('.account-toggle-button').click(function() {
+      $.post('../php/server/get_bank_account_status.php', {bank_account_id: this.id}, function(result) {
+          var status_update;
+          var data = JSON.parse(result);
+
+          if(data['status'] == 1) {
+              status_update = 0;
+              $('#'+data['bank_id']).html('Show Account');
+          } else {
+              status_update = 1;
+              $('#'+data['bank_id']).html('Hide Account');
+          }
+
+          $.post('../php/server/toggle_account.php', {bank_id: data['bank_id'], status: status_update}, function(result) {
+              $('#test').html(result);
+          });
+      });
+  });
+
+  // Show account button
+  $('.show-account-button').click(function() {
+     $.post('../php/server/toggle_account.php', {bank_id: this.id, status: 1}, function(result) {
+         $('#test').html(result);
+     });
+  });
+
   // Unlink all accounts button
   $('#unlink-all-button').click(function(){
     $.post('../php/server/unlink_accounts.php', {remove_type: '2'}, function(result) {
@@ -108,13 +135,19 @@ $(document).ready(function() {
 });
 
 // Function to populate bank account template card
-function create_account_card(bank_name, institution, bank_id) {
+function create_account_card(bank_name, institution, bank_id, status) {
   var location = document.querySelector('#accounts-container');
   var template = document.querySelector('#account-card-template');
   template.content.querySelector('.bank-account-name').innerHTML = bank_name;
   template.content.querySelector('.bank-institution').innerHTML = institution;
-  template.content.querySelector('button').id = bank_id;
+  template.content.querySelector('.account-toggle-button').id = bank_id;
 
   var clone = document.importNode(template.content, true);
   location.appendChild(clone);
+
+  if(status == 1) {
+      $('#'+bank_id).html('Hide Account');
+  } else {
+      $('#'+bank_id).html('Show Account');
+  }
 };

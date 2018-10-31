@@ -11,6 +11,9 @@ require_once(__DIR__.'/db_config.php');
 
 // Exchange public token for access_token
 $public_token = htmlspecialchars($_POST['token']);
+$exchange = call_plaid_service($public_token, 'exchange');
+$access_token = $exchange['access_token'];
+$item_id = $exchange['item_id'];
 $meta = $_POST['meta'];
 
 // Iterate through all selected accounts
@@ -33,6 +36,7 @@ foreach ($meta['accounts'] as $requested_account) {
 
   // If account does not exist, add it to the database
   if (!$account_exists) {
+      // Add bank account info
     if($sql = $link->prepare("INSERT INTO bank_accounts (account_id, bank_account_id, account_mask, account_name, institution, access_token, item_id) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
       $sql->bind_param('issssss', $account_id, $bank_account_id, $account_mask, $account_name, $institution, $access_token, $item_id);
       $account_id = $_SESSION['id'];
@@ -40,14 +44,23 @@ foreach ($meta['accounts'] as $requested_account) {
       $account_mask = $requested_account['mask'];
       $account_name = $requested_account['name'];
       $institution = $meta['institution']['name'];
-      $exchange = call_plaid_service($public_token, 'exchange');
-      $access_token = $exchange['access_token'];
-      $item_id = $exchange['item_id'];
       if($sql->execute()) {
         echo '<h3>New bank account added!</h3>';
+        $account_added = 1;
       }
     }
   }
+}
+
+// Add item info if an account was added
+if($account_added) {
+    if($sql = $link->prepare("INSERT INTO items (account_id, access_token, item_id) VALUES (?, ?, ?)")) {
+        $sql->bind_param('iss', $account_id, $access_token, $item_id);
+        $account_id = $_SESSION['id'];
+        if($sql->execute()) {
+            echo '<h3>Added to Items DB</h3>';
+        }
+    }
 }
 
 $link->close();

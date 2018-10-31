@@ -42,15 +42,17 @@ require_once(__DIR__.'/../server/db_service.php');
             <div class = 'account-card'>
               <div class = 'bank-account-name'></div>
               <div class = 'bank-institution'></div>
-              <button id = '' class = 'unlink-account-button'>Unlink Account</button>
+              <button id = '' class = 'account-toggle-button'></button>
+              <!-- <button id = '' class = 'unlink-account-button'>Unlink Account</button>
+              <button id = '' class = 'hide-account-button'>Hide Account</button> -->
             </div>
           </template>
 
           <?php
           $accounts = get_all_accounts();
-          $accounts->bind_result($bank_name, $institution, $bank_id);
+          $accounts->bind_result($bank_name, $institution, $bank_id, $status);
           while ($accounts->fetch()) {
-            echo '<script>create_account_card("' . $bank_name . '","' . $institution . '","' . $bank_id . '");</script>';
+            echo '<script>create_account_card("' . $bank_name . '","' . $institution . '","' . $bank_id . '","' . $status . '");</script>';
           }
           ?>
 
