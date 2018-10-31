@@ -127,6 +127,8 @@ $(document).ready(function() {
 
 });
 
+// TEMPLATE FUNCTIONS //
+
 // Function to create an account group
 function create_account_group(item_id, bank_name) {
     var location = document.querySelector('#accounts-container');
