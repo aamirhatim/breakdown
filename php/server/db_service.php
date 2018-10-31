@@ -18,6 +18,33 @@ function get_all_accounts() {
   $link->close();
 }
 
+// Returns list of all item ids and respective institution names associated with an account
+// Need to be logged in for this to work
+function get_all_items() {
+    include(__DIR__.'/db_config.php');
+    if ($sql = $link->prepare("SELECT DISTINCT item_id, institution FROM bank_accounts WHERE account_id = ?")) {
+      $sql->bind_param('i', $account_id);
+      $account_id = $_SESSION['id'];
+      if ($sql->execute()) {
+        return $sql;
+      }
+    }
+    $link->close();
+}
+
+// Returns list of bank accounts for a given item id
+function get_item_accounts($item_id) {
+    include(__DIR__.'/db_config.php');
+    if ($sql = $link->prepare('SELECT account_name, bank_account_id, active FROM bank_accounts WHERE account_id = ? AND item_id = ? ORDER BY account_name')) {
+      $sql->bind_param('is', $account_id, $item_id);
+      $account_id = $_SESSION['id'];
+      if ($sql->execute()) {
+        return $sql;
+      }
+    }
+    $link->close();
+}
+
 function get_tokens() {
   include(__DIR__.'/db_config.php');
   if ($sql = $link->prepare('SELECT access_token, bank_account_id FROM bank_accounts WHERE account_id = ? AND active = "1"')) {

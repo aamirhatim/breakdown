@@ -1,7 +1,7 @@
 $(document).ready(function() {
-  // Unlink single account button
-  $('.unlink-account-button').click(function() {
-    $.post('../php/server/unlink_accounts.php', {remove_type: '1', bank_id: this.id}, function(result) {
+  // Unlink item button
+  $('.unlink-account-group-button').click(function() {
+    $.post('../php/server/unlink_accounts.php', {item_id: this.id}, function(result) {
       $('#test').html(result);
     });
   });
@@ -33,12 +33,12 @@ $(document).ready(function() {
      });
   });
 
-  // Unlink all accounts button
-  $('#unlink-all-button').click(function(){
-    $.post('../php/server/unlink_accounts.php', {remove_type: '2'}, function(result) {
-      $('#test').html(result);
-    });
-  });
+  // // Unlink all accounts button
+  // $('#unlink-all-button').click(function(){
+  //   $.post('../php/server/unlink_accounts.php', {remove_type: '2'}, function(result) {
+  //     $('#test').html(result);
+  //   });
+  // });
 
   // Link account button
   $('#link-button').on('click', function() {
@@ -134,12 +134,23 @@ $(document).ready(function() {
 
 });
 
+// Function to create an account group
+function create_account_group(item_id, bank_name) {
+    var location = document.querySelector('#accounts-container');
+    var template = document.querySelector('#account-group-template');
+    template.content.querySelector('.account-group-name').innerHTML = bank_name;
+    template.content.querySelector('.unlink-account-group-button').id = item_id;
+    template.content.querySelector('.item').id = item_id;
+
+    var clone = document.importNode(template.content, true);
+    location.appendChild(clone);
+};
+
 // Function to populate bank account template card
-function create_account_card(bank_name, institution, bank_id, status) {
-  var location = document.querySelector('#accounts-container');
+function create_account_card(item_id, bank_name, bank_id, status) {
+  var location = document.querySelector('#'+item_id);
   var template = document.querySelector('#account-card-template');
   template.content.querySelector('.bank-account-name').innerHTML = bank_name;
-  template.content.querySelector('.bank-institution').innerHTML = institution;
   template.content.querySelector('.account-toggle-button').id = bank_id;
 
   var clone = document.importNode(template.content, true);

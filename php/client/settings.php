@@ -38,21 +38,32 @@ require_once(__DIR__.'/../server/db_service.php');
         <div id = 'test'></div>
         <div id = 'accounts-container'>
           <h1>Accounts</h1>
+          <template id = 'account-group-template'>
+              <div id = '' class = 'item'>
+                  <div class = 'account-group-name'></div>
+                  <button id = '' class = 'unlink-account-group-button'>Unlink</button>
+              </div>
+          </template>
+
           <template id = 'account-card-template'>
             <div class = 'account-card'>
               <div class = 'bank-account-name'></div>
-              <div class = 'bank-institution'></div>
               <button id = '' class = 'account-toggle-button'></button>
-              <!-- <button id = '' class = 'unlink-account-button'>Unlink Account</button>
-              <button id = '' class = 'hide-account-button'>Hide Account</button> -->
             </div>
           </template>
 
           <?php
-          $accounts = get_all_accounts();
-          $accounts->bind_result($bank_name, $institution, $bank_id, $status);
-          while ($accounts->fetch()) {
-            echo '<script>create_account_card("' . $bank_name . '","' . $institution . '","' . $bank_id . '","' . $status . '");</script>';
+          // Get list of all item ids for a user
+          $items = get_all_items();
+          $items->bind_result($item_id, $institution);
+          while($items->fetch()) {
+              echo '<script>create_account_group("' . $item_id . '","' . $institution . '");</script>';
+
+              $accounts = get_item_accounts($item_id);
+              $accounts->bind_result($bank_name, $bank_id, $status);
+              while ($accounts->fetch()) {
+                  echo '<script>create_account_card("' . $item_id . '","' . $bank_name . '","' . $bank_id . '","' . $status . '");</script>';
+              }
           }
           ?>
 
