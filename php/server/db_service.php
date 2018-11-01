@@ -134,4 +134,21 @@ function get_access_token($item_id) {
     $link->close();
 }
 
+// Returns the name of the institution of the item
+function get_item_institution($item_id) {
+    include(__DIR__.'/db_config.php');
+    if ($sql = $link->prepare("SELECT institution FROM items WHERE item_id = ?")) {
+        $sql->bind_param('s', $item_id);
+        if($sql->execute()) {
+            $sql->bind_result($institution);
+            $sql->store_result();
+            if($sql->num_rows == 1) {
+                $sql->fetch();
+                return $institution;
+            }
+        }
+    }
+    $link->close();
+}
+
 ?>

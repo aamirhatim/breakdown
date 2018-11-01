@@ -54,9 +54,10 @@ foreach ($meta['accounts'] as $requested_account) {
 
 // Add item info if an account was added
 if($account_added) {
-    if($sql = $link->prepare("INSERT INTO items (account_id, access_token, item_id) VALUES (?, ?, ?)")) {
-        $sql->bind_param('iss', $account_id, $access_token, $item_id);
+    if($sql = $link->prepare("INSERT INTO items (account_id, access_token, item_id, institution) VALUES (?, ?, ?, ?)")) {
+        $sql->bind_param('isss', $account_id, $access_token, $item_id, $institution);
         $account_id = $_SESSION['id'];
+        $institution = $meta['institution']['name'];
         if($sql->execute()) {
             echo '<h3>Added to Items DB</h3>';
         }
