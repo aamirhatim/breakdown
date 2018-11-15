@@ -45,21 +45,19 @@ require_once(__DIR__.'/../server/db_service.php');
               <th>Categories</th>
             </tr>
             <?php
-            $result = get_transactions();
-            $result->bind_result($bank_id, $amount, $transaction_name, $date, $categories);
-            $result->store_result();
-            while ($result->fetch()) {
-              // Get the bank account name
-              $bank_name = get_bank_name($bank_id);
+            $transactions = get_transactions($_SESSION['id']);
+            foreach ($transactions as $t) {
+                // Get the bank account name
+                $bank_name = get_bank_name($t['bank_id']);
 
-              // Fill out table
-              echo '<tr>';
-              echo '<td>' . $bank_name . '</td>';
-              echo '<td>' . $amount . '</td>';
-              echo '<td>' . $transaction_name . '</td>';
-              echo '<td>' . $date . '</td>';
-              echo '<td>' . $categories . '</td>';
-              echo '</tr>';
+                // Fill out table
+                echo '<tr>';
+                echo '<td>' . $bank_name . '</td>';
+                echo '<td>' . $t['amount'] . '</td>';
+                echo '<td>' . $t['trans_name'] . '</td>';
+                echo '<td>' . $t['date'] . '</td>';
+                echo '<td>' . $t['categories'] . '</td>';
+                echo '</tr>';
             }
             ?>
           </table>

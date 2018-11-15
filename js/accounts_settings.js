@@ -1,23 +1,23 @@
 $(document).ready(function() {
   // Unlink item button
   $('.unlink-account-group-button').click(function() {
-    $.post('../php/server/unlink_accounts.php', {item_id: this.id}, function(result) {
+    $.post('../php/server/unlink_accounts.php', {item_id: this.id.slice(4)}, function(result) {
       $('#test').html(result);
     });
   });
 
   // Account toggle button
   $('.account-toggle-button').click(function() {
-      $.post('../php/server/get_bank_account_status.php', {bank_account_id: this.id}, function(result) {
+      $.post('../php/server/get_bank_account_status.php', {bank_account_id: this.id.slice(4)}, function(result) {
           var status_update;
           var data = JSON.parse(result);
 
           if(data['status'] == 1) {
               status_update = 0;
-              $('#'+data['bank_id']).html('Show Account');
+              $('#btn-'+data['bank_id']).html('Show Account');
           } else {
               status_update = 1;
-              $('#'+data['bank_id']).html('Hide Account');
+              $('#btn-'+data['bank_id']).html('Hide Account');
           }
 
           $.post('../php/server/toggle_account.php', {bank_id: data['bank_id'], status: status_update}, function(result) {
@@ -134,8 +134,8 @@ function create_account_group(item_id, bank_name) {
     var location = document.querySelector('#accounts-container');
     var template = document.querySelector('#account-group-template');
     template.content.querySelector('.account-group-name').innerHTML = bank_name;
-    template.content.querySelector('.unlink-account-group-button').id = item_id;
-    template.content.querySelector('.item').id = item_id;
+    template.content.querySelector('.unlink-account-group-button').id = 'btn-'+item_id;
+    template.content.querySelector('.item').id = 'item-'+item_id;
 
     var clone = document.importNode(template.content, true);
     location.appendChild(clone);
@@ -143,17 +143,17 @@ function create_account_group(item_id, bank_name) {
 
 // Function to populate bank account template card
 function create_account_card(item_id, bank_name, bank_id, status) {
-  var location = document.querySelector('#'+item_id);
+  var location = document.querySelector('#item-'+item_id);
   var template = document.querySelector('#account-card-template');
   template.content.querySelector('.bank-account-name').innerHTML = bank_name;
-  template.content.querySelector('.account-toggle-button').id = bank_id;
+  template.content.querySelector('.account-toggle-button').id = 'btn-'+bank_id;
 
   var clone = document.importNode(template.content, true);
   location.appendChild(clone);
 
   if(status == 1) {
-      $('#'+bank_id).html('Hide Account');
+      $('#btn-'+bank_id).html('Hide Account');
   } else {
-      $('#'+bank_id).html('Show Account');
+      $('#btn-'+bank_id).html('Show Account');
   }
 };

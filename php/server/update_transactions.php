@@ -36,8 +36,8 @@ function update_transactions($item_id, $start_date) {
     foreach($transactions_raw['accounts'] as $t) {
         if(!in_array($t['account_id'], $trans_accounts)) {
             // Add the new account to the database
-            if($sql = $link->prepare("INSERT INTO bank_accounts (account_id, bank_account_id, account_mask, account_name, institution, access_token, item_id) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
-                $sql->bind_param('issssss', $account_id, $bank_account_id, $account_mask, $account_name, $institution, $access_token, $item_id);
+            if($sql = $link->prepare("INSERT INTO bank_accounts (account_id, bank_account_id, account_mask, account_name, item_id) VALUES (?, ?, ?, ?, ?)")) {
+                $sql->bind_param('issss', $account_id, $bank_account_id, $account_mask, $account_name, $item_id);
                 $bank_account_id = $t['account_id'];
                 $account_mask = $t['mask'];
                 $account_name = $t['name'];

@@ -54,16 +54,18 @@ require_once(__DIR__.'/../server/db_service.php');
 
           <?php
           // Get list of all item ids for a user
-          $items = get_all_items();
-          $items->bind_result($item_id, $institution);
-          while($items->fetch()) {
-              echo '<script>create_account_group("' . $item_id . '","' . $institution . '");</script>';
+          $items = get_all_items($_SESSION['id']);
+          foreach($items as $i) {
+              echo '<script>create_account_group("' . $i['item_id'] . '","' . $i['institution'] . '");</script>';
               // Populate group with accounts
-              $accounts = get_item_accounts($item_id);
-              $accounts->bind_result($bank_name, $bank_id, $status);
-              while ($accounts->fetch()) {
-                  echo '<script>create_account_card("' . $item_id . '","' . $bank_name . '","' . $bank_id . '","' . $status . '");</script>';
+              $accounts = get_item_accounts($i['item_id']);
+              foreach($accounts as $a) {
+                  echo '<script>create_account_card("' . $i['item_id'] . '","' . $a['bank_account_name'] . '","' . $a['bank_account_id'] . '","' . $a['status'] . '");</script>';
               }
+            //   $accounts->bind_result($bank_name, $bank_id, $status);
+            //   while ($accounts->fetch()) {
+            //       echo '<script>create_account_card("' . $i['item_id'] . '","' . $bank_name . '","' . $bank_id . '","' . $status . '");</script>';
+            //   }
           }
           ?>
 
