@@ -103,14 +103,17 @@ function get_transactions($account_id) {
     $transactions = [];
     if ($sql = $link->prepare(
                             'SELECT
-                                bank_account_id,
-                                amount,
-                                transaction_name,
-                                date,
-                                categories
+                                t.bank_account_id,
+                                t.amount,
+                                t.transaction_name,
+                                t.date,
+                                t.categories
                             FROM
-                                transactions
-                            WHERE account_id = ?
+                                transactions t
+                            JOIN bank_accounts b ON
+                                t.bank_account_id = b.bank_account_id
+                            WHERE t.account_id = ?
+                            AND b.active = 1
                             ORDER BY date DESC')) {
         $sql->bind_param('i', $account_id);
         if ($sql->execute()) {
