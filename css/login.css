@@ -1,0 +1,71 @@
+@charset 'UTF-8';
+
+/* Enable/disable borders around all elements for debugging */
+ *
+{
+    /*border: 1px solid black;*/
+}
+
+#login-container
+{
+    align-items: center;
+    background-color: rgba(0,255,0,.2);
+    box-sizing: border-box;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
+
+#login-contents
+{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    float: right;
+    height: inherit;
+    justify-content: center;
+    width: 40%;
+}
+
+#login-form
+{
+    align-items: center;
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+}
+
+#login-form input[type = text],input[type = password]
+{
+    border: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin: 5px;
+    padding: 15px;
+    width: 300px;
+}
+
+#login-form input[type = submit]
+{
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin: 20px 10px;
+    padding: 7px;
+}
+
+#login-text
+{
+    margin-bottom: 20px;
+}
+
+#register-link
+{
+    margin-top: 50px;
+}

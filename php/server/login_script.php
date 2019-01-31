@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $sql->bind_result($account_id);
                     if($sql->fetch()) {
                         // Start a new session
-                        session_start();
+                        // session_start();
                         $_SESSION['loggedin'] = true;
                         $_SESSION['id'] = $account_id;
                         $_SESSION['username'] = trim($_POST['user']);
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         die();
                     }
                 } else {
-                    echo '<h1>The username/password was incorrect.</h1>';
+                    $_SESSION['alert_msg'] = 'Incorrect username/password';
                 }
             } else {
                 echo $sql->$error;

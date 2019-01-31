@@ -12,6 +12,13 @@ if(!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)){
 // Include db service library
 require_once(__DIR__.'/../server/db_service.php');
 
+// Show message to direct users to link bank account if no bank accounts found
+$num_accounts = sizeof(get_all_accounts($_SESSION['id']));
+if($num_accounts == 0){
+    // Redirect to empty account page
+    header('location: http://budget.aamirhatim.com/php/client/no_accounts.php');
+}
+
 ?>
 
 <!DOCTYPE html>
